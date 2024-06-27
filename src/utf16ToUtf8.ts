@@ -1,4 +1,4 @@
-function utf16ToUtf8(string: string)
+function UTF16ToUTF8(string: string)
 {
       const codeUnits = [];
       for (let index = 0; index < string.length; index += 2)
@@ -23,4 +23,4 @@ function utf16ToUtf8(string: string)
       return result;
 }
 
-export default utf16ToUtf8;
+export default UTF16ToUTF8;

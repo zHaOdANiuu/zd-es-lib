@@ -98,7 +98,7 @@ declare global {
   const swapValue: typeof import('../global/const')['swapValue']
   const trim: typeof import('../lib/es5')['trim']
   const undef: typeof import('../global/const')['undef']
-  const utf16ToUtf8: typeof import('../utf16ToUtf8')['default']
+  const utf16ToUtf8: typeof import('../UTF16ToUTF8')['default']
   const writJSON: typeof import('../writJSON')['default']
   const writeFile: typeof import('../writeFile')['default']
   const writeXML: typeof import('../writeXML')['default']

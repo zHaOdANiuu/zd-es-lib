@@ -157,6 +157,11 @@ class $Control extends _Control
       addEventListener(eventName: 'change' | 'changing' | 'resize' | 'resizing' | 'show' | 'focus' | 'blur', handler: (Event: Event) => unknown, capturePhase?: boolean): boolean;
 }
 
+class TreeView extends TreeView
+{
+      onDoubleClick(): void
+}
+
 class TreeViewNode
 {
       checked: boolean;

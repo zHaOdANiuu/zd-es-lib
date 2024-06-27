@@ -18,6 +18,7 @@
     "lint": "eslint src --quiet",
     "lint:fix": "eslint src --fix",
     "git": "git add . && git commit -m 'replace' && git push",
+    "git:dev": "git add . && git commit -m 'replace' && git push -u origin dev",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack/webpack.config.ts",
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" NODE_ENV=production webpack --config ./webpack/webpack.config.ts"
   },

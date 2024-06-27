@@ -1,3 +1,14 @@
+//---------------------------------------
+// ObjectConstructor
+//---------------------------------------
+
+function entries<T>(o: Record<string, T> | ArrayLike<T>): [string, T][]
+{
+      const result: [string, T][] = [];
+      for (const k in o) Object.prototype.hasOwnProperty.call(o, k) && result.push([ k, (o as any)[k] ]);
+      return result;
+}
+
 //----------------------------------------
 // String
 //----------------------------------------
@@ -14,4 +25,4 @@ function padEnd(src: string, maxLength: number, fillString: string = ' '): strin
       return src + pad.substring(0, maxLength);
 }
 
-export { padStart, padEnd };
+export { entries, padStart, padEnd };

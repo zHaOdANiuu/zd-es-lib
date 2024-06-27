@@ -1,6 +1,6 @@
-function forOwn<T extends Record<string, unknown>>(object: T, callback: ObjectIterator<T, boolean | void>)
+function forOwn<T extends Record<string, unknown>>(object: T, callback: ObjectIterator<T, void>)
 {
-      for (const key in object) if (Object.prototype.hasOwnProperty.call(object, key) && callback(object[key], key, object) === false) break;
+      for (const key in object) Object.prototype.hasOwnProperty.call(object, key) && callback(object[key], key, object);
 }
 
 export default forOwn;

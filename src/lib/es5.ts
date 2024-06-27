@@ -1,44 +1,31 @@
-//---------------------------------------
-// Function
-//---------------------------------------
-
-function bind(src: Function, thisArg: any, ...args: any[]): any
-{
-      return function anonymity(this: Function, ..._args: any[])
-      {
-            const allArgs = args.concat(_args);
-            if (this instanceof anonymity) return new (src as any)(...allArgs);
-            return src.apply(thisArg, allArgs);
-      };
-}
 
 //---------------------------------------
 // Array
 //---------------------------------------
 
-function forEach<T>(src: T[], callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void
+function forEach<T>(src: T[], callbackfn: (value: T, index: number, array: T[]) => void): void
 {
-      if (thisArg) callbackfn = bind(callbackfn, thisArg);
-      let i = src.length;
-      while (i) callbackfn(src[--i], i, src);
+      let i = -1;
+      const len = src.length;
+      while (++i < len) callbackfn(src[i], i, src);
 }
 
-function map<T, U>(src: T[], callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]
+function map<T, U>(src: T[], callbackfn: (value: T, index: number, array: T[]) => U): U[]
 {
-      if (thisArg) callbackfn = bind(callbackfn, thisArg);
-      let i = src.length;
+      let i = -1;
+      const len = src.length;
       const result = new Array(i);
-      while (i) result[--i] = callbackfn(src[i], i, src);
+      while (++i < len) result[i] = callbackfn(src[i], i, src);
       return result;
 }
 
-function filter<T, S extends T>(src: T[], predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
-function filter<T>(src: T[], predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[]
+function filter<T, S extends T>(src: T[], predicate: (value: T, index: number, array: T[]) => value is S): S[];
+function filter<T>(src: T[], predicate: (value: T, index: number, array: T[]) => unknown): T[]
 {
-      if (thisArg) predicate = bind(predicate, thisArg);
       let i = src.length;
+      const len = src.length;
       const result = [];
-      while (i) predicate(src[--i], i, src) && result.push(src[i]);
+      while (++i < len) predicate(src[i], i, src) && result.push(src[i]);
       return result;
 }
 
@@ -46,12 +33,13 @@ function reduce<T>(src: T[], callbackfn: (previousValue: T, currentValue: T, cur
 function reduce<T>(src: T[], callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
 function reduce<T, U>(src: T[], callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue?: U): U
 {
-      let i = src.length;
+      let i = -1;
       let accumulator: U;
+      const len = src.length;
       initialValue === undefined
             ? accumulator = src[0] as unknown as U
             : accumulator = initialValue;
-      while (i) accumulator = callbackfn(accumulator, src[--i], i, src);
+      while (++i < len) accumulator = callbackfn(accumulator, src[i], i, src);
       return accumulator;
 }
 
@@ -78,11 +66,27 @@ function keys(o: any): string[]
       const result = [];
       if (type === 'string')
       {
-            for (let i = -1, l = o.length; ++i < l;) result.push(String(i));
+            let i = -1;
+            const len = o.length;
+            while (++i < len) result.push(String(i));
             return result;
       }
       for (const prop in o) Object.prototype.hasOwnProperty.call(o, prop) && result.push(prop);
       return result;
+}
+
+//---------------------------------------
+// Function
+//---------------------------------------
+
+function bind(src: Function, thisArg: any, ...args: any[]): any
+{
+      return function anonymity(this: Function, ..._args: any[])
+      {
+            const allArgs = args.concat(_args);
+            if (this instanceof anonymity) return new (src as any)(...allArgs);
+            return src.apply(thisArg, allArgs);
+      };
 }
 
 //---------------------------------------
@@ -94,4 +98,4 @@ function trim(src: string): string
       return src.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
 
-export { bind, forEach, map, filter, reduce, create, keys, trim };
+export { forEach, map, filter, reduce, create, keys, bind, trim };
