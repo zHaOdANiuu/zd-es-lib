@@ -10,18 +10,14 @@ const getProperties = (items: Layer | PropertyGroup): _PropertyClasses[] =>
 /** 对属性组的每个属性进行操作 */
 const eachPropertyGroup = (element: Layer | PropertyGroup, callback: (property: Property) => void) =>
 {
-      let i = -1;
-      let property: _PropertyClasses;
-      const queue = [ getProperties(element) ];
-      while (queue.length > 0)
+      const result: _PropertyClasses[] = [];
+      const properties = getProperties(element);
+      const len = properties.length;
+      for (let i = -1; ++i < len;)
       {
-            while (property = queue[0][++i])
-            {
-                  if (property instanceof PropertyGroup) queue.push(getProperties(property));
-                  else if (property.isModified && property.canSetExpression) callback(property);
-            }
-            i = -1;
-            queue.shift();
+            const property = properties[i];
+            if (property instanceof PropertyGroup) result.push(...getProperties(property));
+            else if (property.isModified && property.canSetExpression) callback(property);
       }
 };
 

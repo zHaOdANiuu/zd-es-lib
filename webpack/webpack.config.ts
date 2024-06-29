@@ -14,8 +14,7 @@ const config: webpack.Configuration = {
       stats:   'errors-only',
       plugins: [
             new WebpackGlobalThis(),
-            new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
-            AutoImport({ dirs: [ 'src/**' ], dts: 'src/@types/auto-imports.d.ts' })
+            new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) })
       ],
       output: {
             clean:             true,
@@ -45,11 +44,11 @@ else
       config.mode = 'development';
       config.optimization = {
             chunkIds:             'deterministic',
+            moduleIds:            'deterministic',
             concatenateModules:   true,
             mangleExports:        false,
             mangleWasmImports:    true,
             mergeDuplicateChunks: true,
-            moduleIds:            'deterministic',
             providedExports:      true,
             usedExports:          true,
             minimize:             true,
@@ -65,12 +64,20 @@ else
                                     keep_quoted_props: true,
                                     wrap_func_args:    false
                               },
-                              compress: false
+                              compress: {
+                                    join_vars:      false,
+                                    collapse_vars:  false,
+                                    computed_props: false,
+                                    reduce_vars:    false,
+                                    reduce_funcs:   false,
+                                    sequences:      false
+                              }
                         },
                         extractComments: false
                   })
             ]
       };
+      config.plugins?.push(AutoImport({ dirs: [ 'src/**' ], dts: 'src/@types/auto-imports.d.ts' }));
 }
 
 export default config;

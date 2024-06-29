@@ -7,7 +7,7 @@ import { undef } from '../global/const';
  * @param callback2 触发失败的回调函数
  */
 
-function onCtrlClick<T extends $Control & Button>(
+function onCtrlClick<T extends _Control & Button>(
       element: T,
       callback1: (this: T) => void,
       callback2?: (this: T) => void

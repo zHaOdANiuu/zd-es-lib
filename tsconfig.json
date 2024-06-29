@@ -7,7 +7,7 @@
     "useDefineForClassFields": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "module": "ESNext",
+    "module": "ES6",
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

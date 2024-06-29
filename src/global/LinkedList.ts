@@ -5,7 +5,7 @@ interface LinkedListNode<T>
 }
 
 type linkedListNode = LinkedListNode<linkedListNode>;
-/** 循环列表,且值为唯一 */
+/** 循环列表,且推介值唯一,相关的查找和删除通过值来查找 */
 class LinkedList
 {
       head: linkedListNode | null;
@@ -27,6 +27,16 @@ class LinkedList
             const newNode = { value, next: this.head };
             this.head = newNode;
             if (this.tail === null) this.tail = newNode;
+      }
+      find(value: unknown): linkedListNode | null
+      {
+            let curNode = this.head;
+            while (curNode !== null)
+            {
+                  if (curNode.value === value) return curNode;
+                  curNode = curNode.next;
+            }
+            return null;
       }
       insertAfter(value: unknown, afterValue: number): void
       {
@@ -54,15 +64,16 @@ class LinkedList
                   curNode = curNode.next;
             }
       }
-      find(value: unknown): linkedListNode | null
+      toArray(): unknown[]
       {
+            const result: unknown[] = [];
             let curNode = this.head;
             while (curNode !== null)
             {
-                  if (curNode.value === value) return curNode;
+                  result.push(curNode.value);
                   curNode = curNode.next;
             }
-            return null;
+            return result;
       }
 }
 

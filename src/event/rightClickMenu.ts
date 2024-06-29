@@ -3,7 +3,7 @@
  * @param container 要容纳的控件
  * @param element 要显示的菜单
  */
-function rightClickMenu(container: $Control, element: Window)
+function rightClickMenu(container: _Control, element: Window)
 {
       element.addEventListener('blur', () => element.hide());
       container.addEventListener('click', (event) =>

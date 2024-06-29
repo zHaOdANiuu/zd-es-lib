@@ -2,9 +2,8 @@
 
 Hi~ o(_￣ ▽ ￣_)ブ
 
-## 文档
-
 - [中文文档](https://zhaodaniuu.github.io/zd-es-lib/docs/zh)
+
 - [English Documentation](https://zhaodaniuu.github.io/zd-es-lib/docs/en)
 
 ## 介绍

@@ -1,6 +1,6 @@
 import { Compiler } from 'webpack';
 import { ConcatSource, Source } from 'webpack-sources';
-/** 解决ae脚本用webpack打包完以后是个立即执行函数,从而获得不到全局的this */
+/** 解决 ae 脚本用 webpack 打包完以后是个立即执行函数,从而获得不到全局的 this */
 class WebpackGlobalThis
 {
       apply(compiler: Compiler)
@@ -11,7 +11,7 @@ class WebpackGlobalThis
                   {
                         Object.entries(assets).forEach(([ pathname, source ]) =>
                         {
-                              const newSource = new ConcatSource('(function(globalThis){', source as Source, '}(this))');
+                              const newSource = new ConcatSource(';(function(globalThis){', source as Source, '}(this))');
                               if (newSource.sourceAndMap().map === null) (assets[pathname] as ConcatSource) = newSource;
                         });
                   });

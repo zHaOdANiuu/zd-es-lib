@@ -15,14 +15,14 @@ function map<T, U>(src: T[], callbackfn: (value: T, index: number, array: T[]) =
       let i = -1;
       const len = src.length;
       const result = new Array(i);
-      while (++i < len) result[i] = callbackfn(src[i], i, src);
+      while (++i < len) result.push(callbackfn(src[i], i, src));
       return result;
 }
 
 function filter<T, S extends T>(src: T[], predicate: (value: T, index: number, array: T[]) => value is S): S[];
 function filter<T>(src: T[], predicate: (value: T, index: number, array: T[]) => unknown): T[]
 {
-      let i = src.length;
+      let i = -1;
       const len = src.length;
       const result = [];
       while (++i < len) predicate(src[i], i, src) && result.push(src[i]);

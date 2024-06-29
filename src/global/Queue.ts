@@ -5,11 +5,11 @@ class Queue<T>
       {
             this._items.push(item);
       }
-      dequeue(): T | undefined
+      dequeue(): T | void
       {
             return this._items.shift();
       }
-      peek(): T | undefined
+      peek(): T
       {
             return this._items[0];
       }

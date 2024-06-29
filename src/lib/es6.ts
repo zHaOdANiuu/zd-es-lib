@@ -32,7 +32,7 @@ function fill<T>(src: T[], value: T, start?: number, end?: number): T[]
       if (start === undef) start = -1;
       if (end === undef) end = src.length;
       let i = start;
-      while (++i < end) src[i] = value;
+      while (++i < end) src.push(value);
       return src;
 }
 
@@ -51,7 +51,7 @@ function from<T, U>(arrayLike: ArrayLike<T>, mapfn?: (v: T, k: number) => U): U[
       while (++i < len)
       {
             const value = arrayLike[i];
-            marker ? result[i] = (mapfn as any)(value, i) : result[i] = value;
+            marker ? result.push((mapfn as any)(value, i)) : result.push(value);
       }
       return result;
 }
