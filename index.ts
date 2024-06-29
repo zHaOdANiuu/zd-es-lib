@@ -1,6 +1,6 @@
 const folder = new Folder('E:\\zd-es-lib\\src');
 const files = eachFolder(folder, /.ts$/);
-$.write(map(files, file => file.name).toString());
+$.writeln(map(files, file => file.name).toString());
 
 const linkedList = new LinkedList();
 linkedList.append(1);
@@ -13,5 +13,5 @@ linkedList.append(4);
 linkedList.append(5);
 linkedList.delete(4);
 
-$.write(linkedList.toArray());
-$.write(globalThis);
+$.writeln(linkedList.toArray());
+$.writeln(globalThis);

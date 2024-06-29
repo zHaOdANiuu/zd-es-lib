@@ -14,7 +14,7 @@ function map<T, U>(src: T[], callbackfn: (value: T, index: number, array: T[]) =
 {
       let i = -1;
       const len = src.length;
-      const result = new Array(i);
+      const result = [];
       while (++i < len) result.push(callbackfn(src[i], i, src));
       return result;
 }

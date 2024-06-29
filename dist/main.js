@@ -29,13 +29,12 @@
         for (;;) {
             var data = stack.pop();
             if (!data) {
-               return result;
+                return result;
             }
-            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-                var item = data_1[_i];
-                item instanceof Folder 
-                ? stack.push(item.getFiles())
-                : suffix.test(item.name) && (result[result.length] = item.fullName);
+            var len = data.length;
+            for (var i = -1; ++i < len; ) {
+                var item = data[i];
+                item instanceof Folder ? stack.push(item.getFiles()) : suffix.test(item.name) && result.push(item);
             }
         }
     }
@@ -43,7 +42,7 @@
     function map(src, callbackfn) {
         var i = -1;
         var len = src.length;
-        var result = new Array(len);
+        var result = [];
         for (;++i < len; ) {
             result.push(callbackfn(src[i], i, src));
         }
@@ -119,12 +118,11 @@
         return LinkedList;
     }();
     var global_LinkedList = LinkedList;
-    var folder = new Folder("E:新建文件夹");
-    var files = src_eachFolder(folder, /.txt$/);
-    $.writeln(files.toString());
-    // $.writeln(map(files, function(file) {
-    //     return file.name;
-    // }).toString());
+    var folder = new Folder("E:\\zd-es-lib\\src");
+    var files = src_eachFolder(folder, /.ts$/);
+    $.write(map(files, function(file) {
+        return file.name;
+    }).toString());
     var linkedList = new global_LinkedList;
     linkedList.append(1);
     linkedList.append(2);
@@ -134,6 +132,6 @@
     linkedList.append(4);
     linkedList.append(5);
     linkedList.delete(4);
-    $.writeln(linkedList.toArray());
-    $.writeln(globalThis);
+    $.write(linkedList.toArray());
+    $.write(globalThis);
 }(this);
