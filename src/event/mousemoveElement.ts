@@ -1,4 +1,4 @@
-function mousemoveElement(element: _Control, callback: (this: _Control, event?: MouseEvent) => void)
+function mouseMoveElement(element: _Control, callback: (this: _Control, event?: MouseEvent) => void)
 {
       let leftClickStatus = false;
       const fn = function(event: MouseEvent)
@@ -17,4 +17,4 @@ function mousemoveElement(element: _Control, callback: (this: _Control, event?: 
       element.addEventListener('mousedown', fn);
 }
 
-export default mousemoveElement;
+export default mouseMoveElement;

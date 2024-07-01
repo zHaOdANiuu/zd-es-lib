@@ -75,7 +75,6 @@ declare global {
   const keys: typeof import('../lib/es5')['keys']
   const map: typeof import('../lib/es5')['map']
   const mouseMoveElement: typeof import('../event/mouseMoveElement')['default']
-  const mousemoveElement: typeof import('../event/mouseMoveElement')['default']
   const mouseoverOrOutChangeColor: typeof import('../event/mouseoverOrOutChangeColor')['default']
   const of: typeof import('../lib/es6')['of']
   const onCtrlClick: typeof import('../event/onCtrlClick')['default']
