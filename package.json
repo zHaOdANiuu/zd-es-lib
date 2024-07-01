@@ -1,6 +1,6 @@
 {
   "name": "zd-es-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "这是一个 ExtendScript 的库,里面包含了一些常用的函数",
   "main": "index.ts",
   "types": "src/@types",
@@ -17,8 +17,8 @@
   "scripts": {
     "lint": "eslint src --quiet",
     "lint:fix": "eslint src --fix",
-    "git": "git add . && git commit -m 'replace' && git push origin main",
-    "git:dev": "git add . && git commit -m 'replace' && git push origin dev",
+    "git": "git add . && git commit -m replace && git push origin main",
+    "git:dev": "git add . && git commit -m replace && git push origin dev",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack/webpack.config.ts",
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" NODE_ENV=production webpack --config ./webpack/webpack.config.ts"
   },
