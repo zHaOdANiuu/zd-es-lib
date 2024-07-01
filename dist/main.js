@@ -120,7 +120,7 @@
     var global_LinkedList = LinkedList;
     var folder = new Folder("E:\\zd-es-lib\\src");
     var files = src_eachFolder(folder, /.ts$/);
-    $.write(map(files, function(file) {
+    $.writeln(map(files, function(file) {
         return file.name;
     }).toString());
     var linkedList = new global_LinkedList;
@@ -132,6 +132,6 @@
     linkedList.append(4);
     linkedList.append(5);
     linkedList.delete(4);
-    $.write(linkedList.toArray());
-    $.write(globalThis);
+    $.writeln(linkedList.toArray());
+    $.writeln(globalThis);
 }(this);

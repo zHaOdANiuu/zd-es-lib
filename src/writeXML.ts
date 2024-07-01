@@ -1,4 +1,4 @@
-function writeXML(path: string, xml: XML): boolean
+function writeXML(path: string | File, xml: XML): boolean
 {
       return writeFile(path, xml.toXMLString());
 }
