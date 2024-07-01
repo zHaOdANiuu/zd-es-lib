@@ -1,6 +1,6 @@
 function mousemoveElement(element: _Control, callback: (this: _Control, event?: MouseEvent) => void)
 {
-      let leftClickStatus: boolean;
+      let leftClickStatus = false;
       const fn = function(event: MouseEvent)
       {
             if (event.type === 'mouseup') leftClickStatus = false;

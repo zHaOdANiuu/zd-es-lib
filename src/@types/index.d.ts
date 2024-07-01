@@ -83,18 +83,24 @@ type FileEncoding = 'UCS-2BE' | 'UCS-2LE' | 'UCS4-BE' | 'UCS-4LE' | 'UTF-8' | 'B
 
 type FileOpenMode = 'r' | 'w' | 'e' | 'a';
 
-type customBoundedValue = Slider & _Control;
+type customBoundedValue = Slider;
 
-type customButton = Button & IconButton & Checkbox & _Control;
+type customButton = Button & IconButton & Checkbox;
 
-type customView = Image &
-      _Control & {
-            notify(eventName?: string): void;
-      };
+type customView = Image & {
+      notify(eventName?: string): void;
+};
+
+interface _AddControl
+{
+      (type: 'customboundedvalue'): customBoundedValue;
+      (type: 'customButton'): customButton;
+      (type: 'customView'): customView;
+}
 
 interface _Control
 {
-   addEventListener(
+      addEventListener(
             eventName:
                   | 'move'
                   | 'moving'
@@ -117,6 +123,11 @@ interface _Control
             handler: (Event: Event) => unknown,
             capturePhase?: boolean
       ): boolean;
+}
+
+interface TreeView
+{
+      onDoubleClick(): void;
 }
 
 interface ArrayLike<T>
@@ -206,11 +217,6 @@ class MouseEvent extends UIEvent
             button: number,
             relatedTarget?: any
       ): void;
-}
-
-class TreeView extends TreeView
-{
-      onDoubleClick(): void;
 }
 
 class TreeViewNode

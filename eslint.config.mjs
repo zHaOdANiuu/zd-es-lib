@@ -29,7 +29,7 @@ const jsStylistic = {
                   1,
                   6,
                   {
-                        SwitchCase:             2,
+                        SwitchCase:             1,
                         VariableDeclarator:     { var: 2, let: 2, const: 3 },
                         FunctionExpression:     { body: 1, parameters: 2 },
                         flatTernaryExpressions: true,

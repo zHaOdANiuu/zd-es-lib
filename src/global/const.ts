@@ -2,11 +2,11 @@
 // 常用的常数
 //-----------------------------------------------------------------------------
 
-const undef = void 0;
+export const undef = void 0;
 
-const BASE_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+export const BASE_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-const BASE_CHARACTERS_TAB: Record<string, number> = {
+export const BASE_CHARACTERS_TAB: Record<string, number> = {
       'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7,
       'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15,
       'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23,
@@ -18,7 +18,7 @@ const BASE_CHARACTERS_TAB: Record<string, number> = {
       '=': 64
 };
 
-const AE_MENU_COMMAND_ID = {
+export const AE_MENU_COMMAND_ID = {
       Next: {
             NewText:             2836,
             NewSolid:            2038,
@@ -31,7 +31,7 @@ const AE_MENU_COMMAND_ID = {
       }
 };
 
-const FILE_SUFFIX = {
+export const FILE_SUFFIX = {
       XML:        /\.xml$/,
       PNG:        /\.png$/,
       JPEG:       /\.jpg|jpeg$/,
@@ -39,7 +39,7 @@ const FILE_SUFFIX = {
       JavaScript: /\.js|jsx|jsxbin$/
 };
 
-const FILE_WILDCARD = {
+export const FILE_WILDCARD = {
       MD:         'zd:*.md,',
       LRC:        'zd:*.lrc,',
       TXT:        'zd:*.txt,',
@@ -51,89 +51,62 @@ const FILE_WILDCARD = {
       JavaScript: 'zd:*.js,zd:*.jsx,zd:*.jsxbin,'
 };
 
-const MIN_IMAGE = '\u0089PNG\r\n\x1A\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01\x03\x00\x00\x00\x01\x18\x07\t\x00\x00\x00\x03PLTE\x00\x00\x00?\x1A\x07\n\x00\x00\x00\x0BIDAT\b';
+export const MIN_IMAGE = '\u0089PNG\r\n\x1A\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01\x03\x00\x00\x00\x01\x18\x07\t\x00\x00\x00\x03PLTE\x00\x00\x00?\x1A\x07\n\x00\x00\x00\x0BIDAT\b';
 
 //-----------------------------------------------------------------------------
 // 一些简短的函数
 //-----------------------------------------------------------------------------
 
-const isEmptyArray = (arr: unknown[]) => Boolean(arr.toString()) === false;
+export const isEmptyArray = (arr: unknown[]) => Boolean(arr.toString()) === false;
 
-const isEmptyObject = (object: object) =>
+export const isEmptyObject = (object: object) =>
 {
       for (const _ in object) return false; return true;
 };
 
-const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+export const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-const removeQuotes = (str: string) => str.replace(/['"]+/g, '');
+export const removeQuotes = (str: string) => str.replace(/['"]+/g, '');
 
-const removeSpaces = (str: string) => str.replace(/\s+/g, '');
+export const removeSpaces = (str: string) => str.replace(/\s+/g, '');
 
-const removeComments = (str: string) => str.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '$1');
+export const removeComments = (str: string) => str.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '$1');
 
-const compressCode = (str: string) => removeSpaces(removeComments(str));
+export const compressCode = (str: string) => removeSpaces(removeComments(str));
 
-const reversedString: (str: string) => string = (str: string) => str.split('').reverse().join('');
+export const reversedString: (str: string) => string = (str: string) => str.split('').reverse().join('');
 
-const randomString = () => Number(generateRandomNumber().toString().substring(2)).toString(16);
+export const randomString = () => Number(generateRandomNumber().toString().substring(2)).toString(16);
 
-const random = (min = 0, max = 1) => Math.floor(generateRandomNumber() * (max - min) + min);
+export const random = (min = 0, max = 1) => Math.floor(generateRandomNumber() * (max - min) + min);
 
-const rgbNormalize = (r: number, g: number, b: number) => [ r / 255, g / 255, b / 255 ];
+export const rgbNormalize = (rgb: number[]) => [ rgb[0] / 255, rgb[1] / 255, rgb[2] / 255 ];
 
-const rgbToHex = (r: number, g: number, b: number) => '#' + ((r << 16) + (g << 8) + b).toString(16);
+export const hsbNormalize = (hsb: number[]) => [ hsb[0] / 360, hsb[1] / 100, hsb[2] / 100 ];
 
-const hexToRgb = (hex: string) =>
+export const rgbToHex = (rgb: number[]) => '#' + ((rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16);
+
+export const hexToRgb = (hex: string) =>
 {
       const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i).exec(hex);
       return result ? [ parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16) ] : null;
 };
 
-const randomHexColor = () => rgbToHex(random(0, 255), random(0, 255), random(0, 255));
+export const randomHexColor = () => rgbToHex([ random(0, 255), random(0, 255), random(0, 255) ]);
 
-const degreesToRadians = (degrees: number) => degrees * Math.PI / 180;
+export const degreesToRadians = (degrees: number) => degrees * Math.PI / 180;
 
-const radiansToDegrees = (radians: number) => radians / Math.PI * 180;
+export const radiansToDegrees = (radians: number) => radians / Math.PI * 180;
 
-const dihedralAngle = (m: number, n: number) => radiansToDegrees(2 * Math.asin(Math.cos(Math.PI / n) * (1 / Math.sin(Math.PI / m))));
+export const dihedralAngle = (m: number, n: number) => radiansToDegrees(2 * Math.asin(Math.cos(Math.PI / n) * (1 / Math.sin(Math.PI / m))));
 
-const iterateeCode = (iterations: number, code: string) =>
+export const iterateeCode = (iterations: number, code: string) =>
 {
       Function.call({}, new Array(1 + iterations).join(';' + code))();
 };
 
-const swapValue = (a: unknown, b: unknown) =>
+export const swapValue = (a: unknown, b: unknown) =>
 {
       if (a === null || b === null || a === undef || b === undef) throw 'Cannot assign value';
       a = [ b, b = a ][0];
-};
-
-export {
-      undef,
-      BASE_CHARACTERS,
-      BASE_CHARACTERS_TAB,
-      AE_MENU_COMMAND_ID,
-      FILE_SUFFIX,
-      FILE_WILDCARD,
-      MIN_IMAGE,
-      isEmptyArray,
-      isEmptyObject,
-      escapeRegExp,
-      removeQuotes,
-      removeSpaces,
-      removeComments,
-      compressCode,
-      reversedString,
-      randomString,
-      random,
-      rgbNormalize,
-      rgbToHex,
-      hexToRgb,
-      randomHexColor,
-      degreesToRadians,
-      radiansToDegrees,
-      dihedralAngle,
-      iterateeCode,
-      swapValue
 };

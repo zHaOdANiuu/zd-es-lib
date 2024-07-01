@@ -1,6 +1,6 @@
-function readFile(path: string, encoding: FileEncoding = 'UTF-8'): string | void
+function readFile(path: string | File, encoding: FileEncoding = 'UTF-8'): string | void
 {
-      const file = new File(path);
+      const file = path instanceof File ? path : new File(path);
       if (file.exists)
       {
             file.encoding = encoding;

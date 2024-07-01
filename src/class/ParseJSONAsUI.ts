@@ -23,7 +23,7 @@ class ParseJSONAsUI
             result.spacing = result.spacing || 0;
             result.alignChildren = result.alignChildren || [ 'fill', 'fill' ];
             (result as any).children = children;
-            return result;
+            return result as Record<string, any>;
       }
       static addPanel(
                   orientation?: _Orientation,
@@ -39,7 +39,7 @@ class ParseJSONAsUI
             result.spacing = result.spacing || 0;
             result.alignChildren = result.alignChildren || [ 'fill', 'fill' ];
             (result as any).children = children;
-            return result;
+            return result as Record<string, any>;
       }
       static addGroup(
                   orientation?: _Orientation,
@@ -55,7 +55,7 @@ class ParseJSONAsUI
             result.spacing = result.spacing || 0;
             result.alignChildren = result.alignChildren || [ 'fill', 'fill' ];
             (result as any).children = children;
-            return result;
+            return result as Record<string, any>;
       }
       static addCheckbox(
                   alignment?: _AlignmentProperty,
@@ -66,7 +66,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as Checkbox;
             (result as any).type = 'checkbox';
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addButton(
                   alignment?: _AlignmentProperty,
@@ -77,7 +77,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as Button;
             (result as any).type = 'button';
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addSlider(
                   alignment?: _AlignmentProperty,
@@ -88,7 +88,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as Slider;
             (result as any).type = 'slider';
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addStaticText(
                   text?: string,
@@ -101,7 +101,7 @@ class ParseJSONAsUI
             (result as any).type = 'statictext';
             if (text) result.text = text;
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addEditText(
                   text?: string,
@@ -114,7 +114,7 @@ class ParseJSONAsUI
             (result as any).type = 'edittext';
             if (text) result.text = text;
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addDropDownList(
                   alignment?: _AlignmentProperty,
@@ -125,7 +125,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as DropDownList;
             (result as any).type = 'dropdownlist';
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       static addListBox(
                   alignment?: _AlignmentProperty,
@@ -136,7 +136,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as ListBox;
             (result as any).type = 'listbox';
             result.alignment = alignment as _AlignmentProperty;
-            return result;
+            return result as Record<string, any>;
       }
       static addTreeView(
                   alignment?: _AlignmentProperty,
@@ -147,7 +147,7 @@ class ParseJSONAsUI
             if (style) result = (style as any); else result = {} as TreeView;
             (result as any).type = 'treeview';
             if (alignment) result.alignment = alignment;
-            return result;
+            return result as Record<string, any>;
       }
       InstalledUI(): Window | Panel
       {
