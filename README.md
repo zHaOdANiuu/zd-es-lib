@@ -21,12 +21,15 @@ tsconfig.json:
 {
       "extends": "./node_modules/zd-es-lib/tsconfig.json",
       "compilerOptions": {
-            "types": ["zd-es-lib/src/@types/auto-imports.d.ts", "zd-es-lib/src/@types/index.d.ts"]
+            "paths": {
+                  "zd-es-lib": ["./node_modules/zd-es-lib/src/zd.ts"]
+            }
       }
 }
 ```
 
-写好 ts 配置以后,这个库的所有函数和变量会变成全局的,不需要 import.
+导入:
+`import * as _ from 'zd-es-lib/src/zd';`
 
 ## 开发
 
