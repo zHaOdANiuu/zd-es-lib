@@ -1,6 +1,6 @@
 {
   "name": "zd-es-lib",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "这是一个 ExtendScript 的库,里面包含了一些常用的函数",
   "main": "index.ts",
   "types": "src/@types",
