@@ -13,7 +13,10 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "types-for-adobe/AfterEffects/22.0"
+    ]
   },
   "ts-node": {
     "compilerOptions": {

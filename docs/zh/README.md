@@ -2,6 +2,8 @@
 
 ```
 zd-es-lib
+├── build // 构建相关
+│ ├── export.js // node脚本,用于导出模块
 ├── dist
 │ ├── main.js // 打包后的 js 文件
 ├── src
@@ -10,12 +12,9 @@ zd-es-lib
 │ ├── event // 事件文件夹
 │ ├── global // 全局变量文件夹
 │ ├── lib // es5-es8 兼容库文件夹
-│ ├── ... // 其它函数
+│ ├── zd.ts // 所有函数的导出
 ├── index.ts // 入口文件
-├── webpack // webpack 配置
-├── tsconfig.json // ts 配置
-├── package.json // 包管理配置
-└── README.md // 介绍文档
+└── webpack // webpack 配置
 ```
 
 # [class](CLASS.md)
@@ -33,5 +32,5 @@ zd-es-lib
 - 因为 ae 的全局 this 指向是分环境的,所以需要一个约定.
 - 在开发 ae 脚本的时候,要用立即执行函数包起来,不然会造成环境污染.
 - 请遵守以下规则:
-     - 代码的整体格式应该为: `;(function(globalThis){/** mycode...*/}(this))`
-     - 写代码时,应该使用`globalThis`来代替`this`,因为`globalThis`是全局的 this.
+     - 代码的整体格式应该为: `;(function(globalThis){/** ...*/}(this))`
+     - 在全局环境下,应该使用`globalThis`来代替`this`.

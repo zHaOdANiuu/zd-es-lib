@@ -17,8 +17,9 @@
   "scripts": {
     "lint": "eslint src --quiet",
     "lint:fix": "eslint src --fix",
-    "git": "git add . && git commit -m 'replace' && git push origin main",
-    "git:dev": "git add . && git commit -m 'replace' && git push origin dev",
+    "git": "git add . && git commit -m replace && git push",
+    "git:dev": "git add . && git commit -m dev && git push origin dev",
+    "es-export": "node build/export.js && eslint src/zd.ts --fix",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack/webpack.config.ts",
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" NODE_ENV=production webpack --config ./webpack/webpack.config.ts"
   },

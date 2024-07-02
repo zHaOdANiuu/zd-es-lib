@@ -20,3 +20,4 @@ class WebpackGlobalThis
 }
 
 export default WebpackGlobalThis;
+ 

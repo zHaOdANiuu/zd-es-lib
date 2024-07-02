@@ -1,6 +1,3 @@
-/// <reference types="types-for-adobe/**" />
-/// <reference types="types-for-adobe/AfterEffects/23.0" />
-
 type globalThis = Object | Panel;
 
 type treeViewElement = TreeView | TreeViewNode;
