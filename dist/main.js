@@ -39,15 +39,6 @@
         }
     }
     var src_eachFolder = eachFolder;
-    function map(src, callbackfn) {
-        var i = -1;
-        var len = src.length;
-        var result = [];
-        for (;++i < len; ) {
-            result.push(callbackfn(src[i], i, src));
-        }
-        return result;
-    }
     var LinkedList = function() {
         function LinkedList() {
             this.head = null;
@@ -118,6 +109,15 @@
         return LinkedList;
     }();
     var global_LinkedList = LinkedList;
+    function map(src, callbackfn) {
+        var i = -1;
+        var len = src.length;
+        var result = [];
+        for (;++i < len; ) {
+            result.push(callbackfn(src[i], i, src));
+        }
+        return result;
+    }
     var folder = new Folder("E:\\zd-es-lib\\src");
     var files = src_eachFolder(folder, /.ts$/);
     $.writeln(map(files, function(file) {
@@ -134,4 +134,5 @@
     linkedList.delete(4);
     $.writeln(linkedList.toArray());
     $.writeln(globalThis);
+    $.writeln.apply($, [ "1" ]);
 }(this);

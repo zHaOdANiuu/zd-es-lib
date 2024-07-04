@@ -1,8 +1,10 @@
-const folder = new Folder('E:\\zd-es-lib\\src');
-const files = eachFolder(folder, /.ts$/);
-$.writeln(map(files, file => file.name).toString());
+import * as _ from './zd';
 
-const linkedList = new LinkedList();
+const folder = new Folder('E:\\zd-es-lib\\src');
+const files = _.eachFolder(folder, /.ts$/);
+$.writeln(_.map(files, file => file.name).toString());
+
+const linkedList = new _.LinkedList();
 linkedList.append(1);
 linkedList.append(2);
 linkedList.append(3);
@@ -15,3 +17,5 @@ linkedList.delete(4);
 
 $.writeln(linkedList.toArray());
 $.writeln(globalThis);
+
+$.writeln(...[ '1' ]);

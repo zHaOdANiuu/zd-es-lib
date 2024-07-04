@@ -1,3 +1,5 @@
+import { rgbNormalize } from './global/const';
+
 function rgbToHsb(rgb: number[])
 {
       const [ r, g, b ] = rgbNormalize(rgb);

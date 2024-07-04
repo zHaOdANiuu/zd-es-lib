@@ -1,3 +1,5 @@
+import Stack from './global/Stack';
+
 /** 遍历文件夹下的所有文件 */
 function eachFolder(folder: Folder, suffix: RegExp): File[] | []
 {

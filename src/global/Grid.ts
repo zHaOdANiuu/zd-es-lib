@@ -1,4 +1,6 @@
-class Grid
+import { swapValue } from './const';
+
+export class Grid
 {
       cache: unknown[][] = [];
       constructor(width: number, height: number)
@@ -29,5 +31,3 @@ class Grid
             );
       }
 }
-
-export default Grid;

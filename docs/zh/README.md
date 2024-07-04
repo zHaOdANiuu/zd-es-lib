@@ -12,10 +12,17 @@ zd-es-lib
 │ ├── event // 事件文件夹
 │ ├── global // 全局变量文件夹
 │ ├── lib // es5-es8 兼容库文件夹
-│ ├── zd.ts // 所有函数的导出
 ├── index.ts // 入口文件
+├── zd.ts // 所有函数的导出
 └── webpack // webpack 配置
 ```
+
+# 约定
+
+- 所有函数都应该使用驼峰命名法,如`getHtml`, `setCookie`, `showAlert`等.
+- 所有类都应该使用大驼峰命名法,如`MyClass`, `YourClass`等.
+- 所有变量都应该使用小驼峰命名法,如`myVariable`, `yourVariable`等.
+- 类的导出不应该用`export default`,而应该用 `export` 关键字.
 
 # [class](CLASS.md)
 

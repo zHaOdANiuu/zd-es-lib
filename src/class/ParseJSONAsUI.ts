@@ -1,4 +1,4 @@
-class ParseJSONAsUI
+export class ParseJSONAsUI
 {
       static SPECIAL_PROPERTY: Record<string, boolean> = {
             type:       true,
@@ -149,6 +149,17 @@ class ParseJSONAsUI
             if (alignment) result.alignment = alignment;
             return result as Record<string, any>;
       }
+      static addImage(
+                  alignment?: _AlignmentProperty,
+                  style?: Image | { properties?: _AddControlProperties }
+      )
+      {
+            let result: TreeView;
+            if (style) result = (style as any); else result = {} as TreeView;
+            (result as any).type = 'image';
+            if (alignment) result.alignment = alignment;
+            return result as Record<string, any>;
+      }
       InstalledUI(): Window | Panel
       {
             const newType = this._propertiesParser(this.UISource);
@@ -201,5 +212,3 @@ class ParseJSONAsUI
             }
       }
 }
-
-export default ParseJSONAsUI;

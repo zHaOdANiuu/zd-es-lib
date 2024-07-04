@@ -1,19 +1,21 @@
-type globalThis = Object | Panel;
+/// <reference types="types-for-adobe/AfterEffects/23.0"/>
 
-type treeViewElement = TreeView | TreeViewNode;
+declare type globalThis = Object | Panel;
 
-type FilterConditionally<Source, Condition> = Pick<
+declare type treeViewElement = TreeView | TreeViewNode;
+
+declare type FilterConditionally<Source, Condition> = Pick<
       Source,
       { [K in keyof Source]: Source[K] extends Condition ? K : never }[keyof Source]
 >;
 
-type UnionKeys<T> = T extends unknown ? keyof T : never;
-type UnionValues<T, K extends PropertyKey> = T extends Record<K, infer U> ? U : never;
-type OfUnion<T> = {
+declare type UnionKeys<T> = T extends unknown ? keyof T : never;
+declare type UnionValues<T, K extends PropertyKey> = T extends Record<K, infer U> ? U : never;
+declare type OfUnion<T> = {
       [P in UnionKeys<T>]: UnionValues<T, P>;
 };
 
-type Zip<
+declare type Zip<
       T extends readonly unknown[],
       U extends readonly unknown[],
       R extends Record<string, unknown> = object
@@ -31,71 +33,71 @@ type Zip<
             : never
       : never;
 
-type Mapping<T extends Union, Value extends string> = ToObj<
+declare type Mapping<T extends Union, Value extends string> = ToObj<
       Zip<UnionToArray<T>, UnionToArray<Value>>
 >;
 
-type Required<T> = {
+declare type Required<T> = {
       [P in keyof T]-?: T[P];
 };
 
-type ValidType = string | number | boolean | object;
+declare type ValidType = string | number | boolean | object;
 
-type PropertyKey = string | number | symbol;
+declare type PropertyKey = string | number | symbol;
 
-type Exclude<T, U> = T extends U ? never : T;
+declare type Exclude<T, U> = T extends U ? never : T;
 
-type Extract<T, U> = T extends U ? T : never;
+declare type Extract<T, U> = T extends U ? T : never;
 
-type Omit<T, K extends keyof unknown> = Pick<T, Exclude<keyof T, K>>;
+declare type Omit<T, K extends keyof unknown> = Pick<T, Exclude<keyof T, K>>;
 
-type NonNullable<T> = T & object;
+declare type NonNullable<T> = T & object;
 
-type Parameters<T extends (...args: unknown) => unknown> = T extends (...args: infer P) => unknown
+declare type Parameters<T extends (...args: unknown) => unknown> = T extends (...args: infer P) => unknown
       ? P
       : never;
 
-type ConstructorParameters<T extends abstract new (...args: unknown) => unknown> =
+declare type ConstructorParameters<T extends abstract new (...args: unknown) => unknown> =
       T extends abstract new (...args: infer P) => unknown ? P : never;
 
-type ReturnType<T extends (...args: unknown) => unknown> = T extends (...args: unknown) => infer R
+declare type ReturnType<T extends (...args: unknown) => unknown> = T extends (...args: unknown) => infer R
       ? R
       : unknown;
 
-type InstanceType<T extends abstract new (...args: unknown) => unknown> = T extends abstract new (
+declare type InstanceType<T extends abstract new (...args: unknown) => unknown> = T extends abstract new (
       ...args: unknown
 ) => infer R
       ? R
       : unknown;
 
-type ArrayIterator<T, TResult> = (value: T, index: number, collection: T[]) => TResult;
+declare type ArrayIterator<T, TResult> = (value: T, index: number, collection: T[]) => TResult;
 
-type ObjectIterator<TObject, TResult> = (
+declare type ObjectIterator<TObject, TResult> = (
       value: TObject[keyof TObject],
       key: string,
       collection: TObject
 ) => TResult;
 
-type FileEncoding = 'UCS-2BE' | 'UCS-2LE' | 'UCS4-BE' | 'UCS-4LE' | 'UTF-8' | 'BINARY';
+declare type FileEncoding = 'UCS-2BE' | 'UCS-2LE' | 'UCS4-BE' | 'UCS-4LE' | 'UTF-8' | 'BINARY';
 
-type FileOpenMode = 'r' | 'w' | 'e' | 'a';
+declare type FileOpenMode = 'r' | 'w' | 'e' | 'a';
 
-type customBoundedValue = Slider;
+declare type customBoundedValue = Slider;
 
-type customButton = Button & IconButton & Checkbox;
+declare type customButton = Button & IconButton & Checkbox;
 
-type customView = Image & {
+declare type customView = Image & {
       notify(eventName?: string): void;
 };
 
-interface _AddControl
+declare interface _AddControl
 {
       (type: 'customboundedvalue'): customBoundedValue;
-      (type: 'customButton'): customButton;
-      (type: 'customView'): customView;
+      (type: 'custombutton'): customButton;
+      (type: 'customview'): customView;
 }
 
-interface _Control
+declare interface _Control
 {
       addEventListener(
             eventName:
@@ -122,18 +124,18 @@ interface _Control
       ): boolean;
 }
 
-interface TreeView
+declare interface TreeView
 {
       onDoubleClick(): void;
 }
 
-interface ArrayLike<T>
+declare interface ArrayLike<T>
 {
       readonly [n: number]: T;
       readonly length: number;
 }
 
-interface XML
+declare interface XML
 {
       appendChild(child: XML): XML & XML[];
       attribute(name: string | number): XML & XML[];
@@ -142,13 +144,13 @@ interface XML
       children(): XML & XML[];
 }
 
-interface File
+declare interface File
 {
       encoding: FileEncoding;
       open(mode: FileOpenMode, type?: string, creator?: string): boolean;
 }
 
-interface String
+declare interface String
 {
       replace(
             searchValue: RegExp,
@@ -157,14 +159,14 @@ interface String
       split(delimiter: RegExp | string, limit?: number): string[];
 }
 
-interface RegExp
+declare interface RegExp
 {
       source: string;
       lastIndex: number;
       global: boolean;
 }
 
-interface Error
+declare interface Error
 {
       end: number;
       fileName: string;
@@ -176,13 +178,13 @@ interface Error
       start: number;
 }
 
-interface _AddControlPropertiesEditText
+declare interface _AddControlPropertiesEditText
 {
       /** 原来的scrollable是错误的 */
       scrolling?: boolean;
 }
 
-class MouseEvent extends UIEvent
+declare class MouseEvent extends UIEvent
 {
       altKey: boolean;
       button: number;
@@ -195,7 +197,7 @@ class MouseEvent extends UIEvent
       screenX: number;
       screenY: number;
       shiftKey: boolean;
-      type: string;
+      declare type: string;
       getModifierState(keyIdentifier: string): boolean;
       initMouseEvent(
             eventName: string,
@@ -216,7 +218,7 @@ class MouseEvent extends UIEvent
       ): void;
 }
 
-class TreeViewNode
+declare class TreeViewNode
 {
       checked: boolean;
       expanded: boolean;

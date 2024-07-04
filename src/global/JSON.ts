@@ -1,11 +1,7 @@
-interface JSON
-{
-  parse: (text: string, reviver?: (key: string, value: PropertyKey) => unknown) => Record<string, unknown>;
-  stringify: (data: string, replacer?: (key: string, value: unknown) => unknown | string[], space?: number | string) => string;
-}
+import { undef } from './const';
 
-const JSON: JSON = {
-      parse(text, reviver)
+const JSON = {
+      parse(text: string, reviver?: (key: string, value: PropertyKey) => unknown): Record<string, unknown> | void
       {
             try
             {
@@ -30,7 +26,8 @@ const JSON: JSON = {
                   throw error.line.toString() + '\n' + error.message;
             }
       },
-      stringify: (app as any).objectToJSON
+      stringify: (app as any).objectToJSON as
+      (data: string, replacer?: (key: string, value: unknown) => unknown | string[], space?: number | string) => string
 };
 
 export default JSON;

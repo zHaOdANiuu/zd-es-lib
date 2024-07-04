@@ -17,7 +17,7 @@ interface __node<T>
 type _folder = __folder<_folder>;
 type _node = __node<_node>;
 
-class TreeViewExtends
+export class TreeViewExtends
 {
       treeView: TreeView;
       constructor(treeView: TreeView)
@@ -133,5 +133,3 @@ class TreeViewExtends
             return result;
       }
 }
-
-export default TreeViewExtends;

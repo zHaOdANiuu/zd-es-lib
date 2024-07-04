@@ -22,14 +22,14 @@ tsconfig.json:
       "extends": "./node_modules/zd-es-lib/tsconfig.json",
       "compilerOptions": {
             "paths": {
-                  "zd-es-lib": ["./node_modules/zd-es-lib/src/zd.ts"]
+                  "zd-es-lib": ["./node_modules/zd-es-lib/zd.ts"]
             }
       }
 }
 ```
 
 导入:
-`import * as _ from 'zd-es-lib/src/zd';`
+`import * as _ from 'zd-es-lib';`
 
 ## 开发
 

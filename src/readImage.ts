@@ -1,3 +1,5 @@
+import readFile from './readFile';
+
 function readImage(path: string | File): string | void
 {
       const data = readFile(path, 'BINARY');

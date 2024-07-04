@@ -1,3 +1,5 @@
+import { BASE_CHARACTERS } from './const';
+
 function btoa(data: string): string
 {
       if ((/[^\x00-\xFF]/).test(data)) throw 'Invalid character in input string';

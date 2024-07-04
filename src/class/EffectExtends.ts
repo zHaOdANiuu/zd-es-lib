@@ -1,4 +1,4 @@
-class EffectExtends
+export class EffectExtends
 {
       layer: AVLayer;
       effectGroup: PropertyGroup;
@@ -35,5 +35,3 @@ class EffectExtends
       //       this.layer.effect.selected = true;
       // }
 }
-
-export default EffectExtends;

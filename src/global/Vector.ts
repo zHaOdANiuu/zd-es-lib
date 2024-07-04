@@ -1,3 +1,5 @@
+import { map, reduce } from '../lib/es5';
+
 const Vector =
 {
       add(vecArr1: number[], vecArr2: number[])

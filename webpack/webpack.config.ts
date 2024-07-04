@@ -2,7 +2,6 @@ import path from 'path';
 import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import WebpackGlobalThis from './webpack.plugins';
-import AutoImport from 'unplugin-auto-import/webpack';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -43,8 +42,8 @@ else
 {
       config.mode = 'development';
       config.optimization = {
-            chunkIds:             'deterministic',
-            moduleIds:            'deterministic',
+            chunkIds:             'named',
+            moduleIds:            'named',
             concatenateModules:   true,
             mangleExports:        false,
             mangleWasmImports:    true,
@@ -77,7 +76,6 @@ else
                   })
             ]
       };
-      config.plugins?.push(AutoImport({ dirs: [ 'src/**' ], dts: 'src/@types/auto-imports.d.ts' }));
 }
 
 export default config;

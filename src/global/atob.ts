@@ -1,3 +1,5 @@
+import { BASE_CHARACTERS_TAB } from './const';
+
 function atob(data: string): string
 {
       return data.replace(/[^A-Za-z0-9\+\/]/g, '').replace(/\S{1,4}/g, (str: string) =>

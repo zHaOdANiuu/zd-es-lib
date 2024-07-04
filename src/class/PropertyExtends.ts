@@ -1,4 +1,4 @@
-class PropertyExtends
+export class PropertyExtends
 {
       comp: CompItem;
       layer: Layer;
@@ -8,5 +8,3 @@ class PropertyExtends
             this.comp = this.layer.containingComp;
       }
 }
-
-export default PropertyExtends;

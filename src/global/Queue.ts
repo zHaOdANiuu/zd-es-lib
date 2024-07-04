@@ -1,4 +1,4 @@
-class Queue<T>
+export class Queue<T>
 {
       private _items: T[] = [];
       enqueue(item: T): void
@@ -22,5 +22,3 @@ class Queue<T>
             return this._items.length;
       }
 }
-
-export default Queue;
