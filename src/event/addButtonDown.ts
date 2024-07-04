@@ -5,7 +5,8 @@ function addButtonDown(
       callback: (button: Button, index: number) => void
 )
 {
-      for (let i = -1; ++i < num;)
+      let i = -1;
+      while (++i < num)
       {
             const button = container.add('button');
             button.bounds = [ 0, i * size[1], size[0], (i + 1) * size[1] ];

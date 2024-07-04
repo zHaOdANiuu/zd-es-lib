@@ -13,7 +13,7 @@ function onCtrlClick<T extends Button>(
       callback2?: (this: T) => void
 )
 {
-      element.addEventListener('mousedown', (event) =>
+      element.addEventListener('mousedown', event =>
       {
             if (event.ctrlKey === true) element.onClick = callback1;
             else if (callback2 !== undef) element.onClick = callback2;
