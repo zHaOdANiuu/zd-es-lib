@@ -6,7 +6,7 @@ interface LinkedListNode<T>
 
 type linkedListNode = LinkedListNode<linkedListNode>;
 /** 循环列表,且推介值唯一,相关的查找和删除通过值来查找 */
-export class LinkedList
+class LinkedList
 {
       head: linkedListNode | null;
       tail: linkedListNode | null;
@@ -76,3 +76,5 @@ export class LinkedList
             return result;
       }
 }
+
+export default LinkedList;

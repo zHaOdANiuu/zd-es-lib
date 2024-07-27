@@ -6,7 +6,7 @@
 function rightClickMenu(container: _Control, element: Window)
 {
       element.addEventListener('blur', () => element.hide());
-      container.addEventListener('click', event =>
+      container.addEventListener('mousedown', event =>
       {
             if (event.button === 2 && event.detail === 1)
             {

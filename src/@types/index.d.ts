@@ -1,6 +1,8 @@
 /// <reference types="types-for-adobe/AfterEffects/23.0"/>
 
-declare type globalThis = Object | Panel;
+declare type globalThis = typeof Object | Panel;
+
+declare type TypeString<T> = T extends object ? '[object Object]' : T extends any[] ? '[object Array]' : T extends string ? '[object String]' : T extends number ? '[object Number]' : T extends boolean ? '[object Boolean]' : T extends null ? '[object Null]' : '[object Undefined]'
 
 declare type treeViewElement = TreeView | TreeViewNode;
 
@@ -40,6 +42,12 @@ declare type Mapping<T extends Union, Value extends string> = ToObj<
 declare type Required<T> = {
       [P in keyof T]-?: T[P];
 };
+
+declare type rgb = [number, number, number];
+
+declare type pos = [number, number];
+
+declare type size = [number, number];
 
 declare type ValidType = string | number | boolean | object;
 
@@ -86,9 +94,13 @@ declare type customBoundedValue = Slider;
 
 declare type customButton = Button & IconButton & Checkbox;
 
-declare type customView = Image & {
-      notify(eventName?: string): void;
-};
+declare type customView = Image & { notify(eventName?: string): void };
+
+declare interface AVLayer
+{ readonly source: { readonly mainSource: SolidSource | FileSource | PlaceholderSource } }
+
+declare interface ShapeLayer
+{ readonly Contents: PropertyGroup }
 
 declare interface _AddControl
 {
@@ -124,10 +136,11 @@ declare interface _Control
       ): boolean;
 }
 
+declare interface FootageSource
+{ readonly mainSource: SolidSource | FileSource | PlaceholderSource }
+
 declare interface TreeView
-{
-      onDoubleClick(): void;
-}
+{ onDoubleClick(): void }
 
 declare interface ArrayLike<T>
 {
@@ -226,12 +239,11 @@ declare class TreeViewNode
       readonly index: number;
       readonly parent: _Control;
       selected: boolean;
-      readonly subItems: Array<any>;
+      readonly subItems: any[];
       readonly items: ListItem[];
       text: string;
       readonly type: string;
-      add(type: 'node', text?: string): ListItem;
-      add(type: 'item', text?: string): ListItem;
+      add(type: 'node' | 'item', text?: string): ListItem;
       remove(what: any): void;
       removeAll(): void;
 }

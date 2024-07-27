@@ -1,43 +1,62 @@
-# 目录
+# zd-es-lib
+
+## 目录
 
 ```
 zd-es-lib
-├── build // 构建相关
-│ ├── export.js // node脚本,用于导出模块
-├── dist
-│ ├── main.js // 打包后的 js 文件
-├── src
-│ ├── @types // 类型文件夹
-│ ├── class // 类文件夹
-│ ├── event // 事件文件夹
-│ ├── global // 全局变量文件夹
-│ ├── lib // es5-es8 兼容库文件夹
-├── index.ts // 入口文件
-├── zd.ts // 所有函数的导出
-└── webpack // webpack 配置
+├── dist  // 打包目录
+├── docs  // 文档目录
+├── src   // 源代码目录
+├── test  // 测试目录
+├── CHANGELOG.md // 更新日志
+├── CODE_OF_CONDUCT.md // 行为准则
+├── CONTRIBUTING.md // 贡献指南
+├── LICENSE // 许可证
+├── README.md // 介绍
+└── package.json // 包信息
 ```
 
-# 约定
+## 安装
 
-- 所有函数都应该使用驼峰命名法,如`getHtml`, `setCookie`, `showAlert`等.
-- 所有类都应该使用大驼峰命名法,如`MyClass`, `YourClass`等.
-- 所有变量都应该使用小驼峰命名法,如`myVariable`, `yourVariable`等.
-- 类的导出不应该用`export default`,而应该用 `export` 关键字.
+```powershell
+npm i zd-es-lib
+```
 
-# [class](CLASS.md)
+## 导入
 
-# [event](EVENT.md)
+`import * as _ from 'zd-es-lib';`
 
-# [global](GLOBAL.md)
+## 使用
 
-# [lib](LIB.md)
+tsconfig.json:
 
-# [function](FUNCTION.md)
+```json
+{
+      "extends": "./node_modules/zd-es-lib/tsconfig.json",
+      "compilerOptions": {
+            "baseUrl":".",
+            "paths": {
+                  "zd-es-lib": ["node_modules/zd-es-lib/index.ts"]
+            },
+            "types": [
+                  "zd-es-lib/src/@types/index.d.ts"
+            ]
+      }
+}
+```
 
-# globalThis
+**注意!!!**
+因为脚本的类型声明并不完善,所以我用ts的三斜线语法导入类型,然后更改,如果要使用原本的类型声明,
+请在`tsconfig.json`配置里的`types`里更改为:
 
-- 因为 ae 的全局 this 指向是分环境的,所以需要一个约定.
-- 在开发 ae 脚本的时候,要用立即执行函数包起来,不然会造成环境污染.
-- 请遵守以下规则:
-     - 代码的整体格式应该为: `;(function(globalThis){/** ...*/}(this))`
-     - 在全局环境下,应该使用`globalThis`来代替`this`.
+```json
+"types": ["types-for-adobe/AfterEffects/23.0"]
+```
+
+## 代码
+
+- [lib](LIB.md)
+- [global](GLOBAL.md)
+- [class](CLASS.md)
+- [function](FUNCTION.md)
+- [event](EVENT.md)

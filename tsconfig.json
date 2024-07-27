@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES3",
     "ignoreDeprecations": "5.0",
+    "module": "ES6",
     "outDir": "./dist/",
     "noLib": true,
     "noEmit": false,
@@ -9,7 +10,6 @@
     "useDefineForClassFields": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "module": "ES6",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -17,20 +17,10 @@
     "strictNullChecks": true,
     "esModuleInterop": true
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "noLib": false,
-      "allowJs": true,
-      "types": [
-        "node"
-      ]
-    }
-  },
   "include": [
     "index.ts",
     "src",
     "tests",
-    "zd.ts"
+    "function/Vector.ts"
   ]
 }

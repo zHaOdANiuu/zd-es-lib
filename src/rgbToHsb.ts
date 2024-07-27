@@ -14,9 +14,9 @@ function rgbToHsb(rgb: number[])
       else h = (r - g) / delta + 4;
 
       return [
-            Math.round(h * 60) || 360,
-            delta === 0 ? 0 : delta / max * 100,
-            max * 100
+            Math.round(h * 60),
+            Math.round(delta === 0 ? 0 : delta / max * 100),
+            Math.round(max * 100)
       ];
 }
 

@@ -1,6 +1,8 @@
-function forOwn<T extends Record<string, unknown>>(object: T, callback: ObjectIterator<T, void>)
+import { hasOwn } from './global/const';
+
+function forOwn<T extends object>(object: T, callback: ObjectIterator<T, void>)
 {
-      for (const key in object) Object.prototype.hasOwnProperty.call(object, key) && callback(object[key], key, object);
+      for (const key in object) hasOwn(object, key) && callback(object[key], key, object);
 }
 
 export default forOwn;

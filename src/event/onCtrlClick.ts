@@ -1,23 +1,14 @@
-import { undef } from '../global/const';
-
 /**
- * 给控件添加ctrl + 单击事件
+ * 给控件添加ctrl + 左键事件
  * @param element 有onClick事件的控件
- * @param callback1 触发以后的回调函数
- * @param callback2 触发失败的回调函数
+ * @param callback 触发以后的回调函数
  */
 
-function onCtrlClick<T extends Button>(
-      element: T,
-      callback1: (this: T) => void,
-      callback2?: (this: T) => void
-)
+function onCtrlClick<T extends _Control>(element: T, callback: (this: T, event: MouseEvent) => void)
 {
-      element.addEventListener('mousedown', event =>
+      element.addEventListener('mousedown', e =>
       {
-            if (event.ctrlKey === true) element.onClick = callback1;
-            else if (callback2 !== undef) element.onClick = callback2;
-            else (element as any).onClick = undef;
+            if (e.ctrlKey === true && e.button === 0 && e.detail === 1) callback.call(element, e);
       });
 }
 

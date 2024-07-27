@@ -1,4 +1,4 @@
-export class Stack<T>
+class Stack<T>
 {
       private _items: T[];
       constructor()
@@ -26,3 +26,4 @@ export class Stack<T>
             return this._items.length;
       }
 }
+export default Stack;

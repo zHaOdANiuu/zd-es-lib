@@ -1,23 +1,28 @@
 const getProperties = (items: Layer | PropertyGroup): _PropertyClasses[] =>
 {
       let i = 0;
-      const length = items.numProperties;
+      const len = items.numProperties;
       const result: _PropertyClasses[] = [];
-      while (i < length) result.push(items.property(++i));
+      while (i < len) result.push(items.property(++i));
       return result;
 };
 
 /** 对属性组的每个属性进行操作 */
 const eachPropertyGroup = (element: Layer | PropertyGroup, callback: (property: Property) => void) =>
 {
-      const result: _PropertyClasses[] = [];
-      const properties = getProperties(element);
-      const len = properties.length;
-      for (let i = -1; ++i < len;)
+      for (const stack = [ getProperties(element) ]; ;)
       {
-            const property = properties[i];
-            if (property instanceof PropertyGroup) result.push(...getProperties(property));
-            else if (property.isModified && property.canSetExpression) callback(property);
+            const data = stack.pop();
+            if (!data) break;
+            let i = -1;
+            const len = data.length;
+            while (++i < len)
+            {
+                  const property = data[i];
+                  property instanceof PropertyGroup
+                        ? stack.push(getProperties(property))
+                        : property.isModified && property.canSetExpression && callback(property);
+            }
       }
 };
 
@@ -101,13 +106,7 @@ const eachSelectedLayers = (callback: (layer: Layer) => void) =>
             const selectedLayers = activeItem.selectedLayers;
             const length = selectedLayers.length;
             if (activeItem.selectedLayers.length > 1)
-            {
-                  let index = -1;
-                  while (++index < length)
-                  {
-                        callback(selectedLayers[index]);
-                  }
-            }
+                  for (let index = -1; ++index < length;) callback(selectedLayers[index]);
       });
 };
 

@@ -1,12 +1,12 @@
 import mouseMoveEnviron from './mouseMoveEnviron';
 
-function mouseMoveElement(element: _Control, callback: () => void)
+function mouseMoveElement<T extends _Control>(element: T, callback: (this: T, event: MouseEvent) => void)
 {
-      mouseMoveEnviron(element, e =>
+      mouseMoveEnviron(element, function(e)
       {
-            element.location.x += e.clientX - element.size[0] / 2;
-            element.location.y += e.clientY - element.size[1] / 2;
-            callback();
+            this.location.x += e.clientX - this.size[0] / 2;
+            this.location.y += e.clientY - this.size[1] / 2;
+            callback.call(this, e);
       });
 }
 

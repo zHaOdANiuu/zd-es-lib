@@ -1,6 +1,4 @@
-import { swapValue } from './const';
-
-export class Grid
+class Grid
 {
       cache: unknown[][] = [];
       constructor(width: number, height: number)
@@ -25,9 +23,12 @@ export class Grid
       }
       moveTo(oldPosition: [x: number, y: number], newPosition: [x: number, y: number])
       {
-            swapValue(
-                  this.cache[oldPosition[0]][oldPosition[1]],
+            this.cache[oldPosition[0]][oldPosition[1]] = [
+                  this.cache[newPosition[0]][newPosition[1]],
+                  this.cache[oldPosition[0]][oldPosition[1]] =
                   this.cache[newPosition[0]][newPosition[1]]
-            );
+            ][0];
       }
 }
+
+export default Grid;

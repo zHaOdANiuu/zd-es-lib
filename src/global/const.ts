@@ -57,9 +57,15 @@ export const MIN_IMAGE = '\u0089PNG\r\n\x1A\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\
 // 一些简短的函数
 //-----------------------------------------------------------------------------
 
-export const isEmptyArray = (arr: unknown[]) => Boolean(arr.toString()) === false;
+export const hasOwn = <T extends object>(obj: T, key: string | keyof T): key is keyof T => Object.prototype.hasOwnProperty.call(obj, key);
 
-export const isEmptyObject = (object: object) =>
+export const typeString = <T>(params: T): TypeString<T> => Object.prototype.toString.call(params as any);
+
+export const toArray = <T>(params: T): T[] | [] => Array.prototype.slice.call(params as object);
+
+export const isEmptyArray = <T extends []>(arr: unknown[]): arr is T => Boolean(arr.toString()) === false;
+
+export const isEmptyObject = <T extends object>(object: Record<string, any>): object is T =>
 {
       for (const _ in object) return false; return true;
 };
@@ -68,7 +74,7 @@ export const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, 
 
 export const removeQuotes = (str: string) => str.replace(/['"]+/g, '');
 
-export const removeSpaces = (str: string) => str.replace(/\s+/g, '');
+export const removeSpaces = (str: string) => str.replace(/[\s\uFEFF\xA0]+/g, '');
 
 export const removeComments = (str: string) => str.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '$1');
 
@@ -105,8 +111,4 @@ export const iterateeCode = (iterations: number, code: string) =>
       Function.call({}, new Array(1 + iterations).join(';' + code))();
 };
 
-export const swapValue = (a: unknown, b: unknown) =>
-{
-      if (a === null || b === null || a === undef || b === undef) throw 'Cannot assign value';
-      a = [ b, b = a ][0];
-};
+export const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
