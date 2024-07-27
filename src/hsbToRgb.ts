@@ -1,3 +1,5 @@
+import { hsbNormalize } from './global/const';
+
 function hsbToRgb(hsb: number[])
 {
       const [ h, s, b ] = hsbNormalize(hsb);
@@ -7,7 +9,7 @@ function hsbToRgb(hsb: number[])
       if (s === 0) r = g = _b = b;
       else
       {
-            const i = Math.floor(h * 6);
+            const i = Math.round(h * 6);
             const f = h * 6 - i;
             const p = b * (1 - s);
             const q = b * (1 - s * f);
@@ -30,3 +32,5 @@ function hsbToRgb(hsb: number[])
             Math.round((_b as number) * 255)
       ];
 }
+
+export default hsbToRgb;

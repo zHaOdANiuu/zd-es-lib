@@ -5,7 +5,8 @@ function addButtonToLeftAndRight(
       callback: (button: Button, index: number) => void
 )
 {
-      for (let i = -1; ++i < num;)
+      let i = -1;
+      while (++i < num)
       {
             const button = container.add('button');
             button.bounds = i % 2 === 0

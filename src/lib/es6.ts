@@ -1,5 +1,8 @@
 //---------------------------------------
 // Array
+
+import { undef } from '../global/const';
+
 //---------------------------------------
 function find<T, S extends T>(src: T[], predicate: (value: T, index: number, obj: T[]) => value is S): S | undefined;
 function find<T>(src: T[], predicate: (value: T, index: number, obj: T[]) => unknown): T | undefined
@@ -60,9 +63,9 @@ function from<T, U>(arrayLike: ArrayLike<T>, mapfn?: (v: T, k: number) => U): U[
 // ObjectConstructor
 //---------------------------------------
 
-function assign<T extends {}, U>(target: T, source: U): T & U;
-function assign<T extends {}, U, V>(target: T, source1: U, source2: V): T & U & V;
-function assign<T extends {}, U, V, W>(target: T, _source1?: U, _source2?: V, _source3?: W): T & U & V & W
+function assign<T extends object, U>(target: T, source: U): T & U;
+function assign<T extends object, U, V>(target: T, source1: U, source2: V): T & U & V;
+function assign<T extends object, U, V, W>(target: T, _source1?: U, _source2?: V, _source3?: W): T & U & V & W
 {
       if (target === null) throw 'TypeError: Cannot convert undefined or null to object';
       let i = -1;

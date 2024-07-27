@@ -29,16 +29,13 @@ function filter<T>(src: T[], predicate: (value: T, index: number, array: T[]) =>
       return result;
 }
 
-function reduce<T>(src: T[], callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;
 function reduce<T>(src: T[], callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;
 function reduce<T, U>(src: T[], callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue?: U): U
 {
       let i = -1;
       let accumulator: U;
       const len = src.length;
-      initialValue === undefined
-            ? accumulator = src[0] as unknown as U
-            : accumulator = initialValue;
+      initialValue ? accumulator = initialValue : accumulator = src[0] as unknown as U;
       while (++i < len) accumulator = callbackfn(accumulator, src[i], i, src);
       return accumulator;
 }
@@ -79,9 +76,9 @@ function keys(o: any): string[]
 // Function
 //---------------------------------------
 
-function bind(src: Function, thisArg: any, ...args: any[]): any
+function bind(src: typeof Function, thisArg: any, ...args: any[]): any
 {
-      return function anonymity(this: Function, ..._args: any[])
+      return function anonymity(this: typeof Function, ..._args: any[])
       {
             const allArgs = args.concat(_args);
             if (this instanceof anonymity) return new (src as any)(...allArgs);
@@ -98,4 +95,14 @@ function trim(src: string): string
       return src.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
 
-export { forEach, map, filter, reduce, create, keys, bind, trim };
+function trimEnd(src: string): string
+{
+      return src.replace(/[\s\uFEFF\xA0]+$/, '');
+}
+
+function trimStart(src: string): string
+{
+      return src.replace(/^[\s\uFEFF\xA0]+/, '');
+}
+
+export { forEach, map, filter, reduce, create, keys, bind, trim, trimEnd, trimStart };

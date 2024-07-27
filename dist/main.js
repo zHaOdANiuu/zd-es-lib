@@ -1,122 +1,166 @@
-!function(globalThis) {
-    "use strict";
-    var Stack = function() {
-        function Stack() {
-            this._items = [];
+(function(globalThis) {
+    var activeCompItemEnviron = function(callback) {
+        var activeItem = app.project.activeItem;
+        if (activeItem instanceof CompItem) {
+            callback(activeItem);
         }
-        Stack.prototype.push = function(value) {
-            this._items.push(value);
-        };
-        Stack.prototype.pop = function() {
-            return this._items.pop();
-        };
-        Stack.prototype.peek = function() {
-            return this._items[this._items.length - 1];
-        };
-        Stack.prototype.isEmpty = function() {
-            return 0 === this._items.length;
-        };
-        Stack.prototype.size = function() {
-            return this._items.length;
-        };
-        return Stack;
-    }();
-    var global_Stack = Stack;
-    function eachFolder(folder, suffix) {
-        var result = [];
-        var stack = new global_Stack;
-        stack.push(folder.getFiles());
-        for (;;) {
-            var data = stack.pop();
-            if (!data) {
-                return result;
-            }
-            var len = data.length;
-            for (var i = -1; ++i < len; ) {
-                var item = data[i];
-                item instanceof Folder ? stack.push(item.getFiles()) : suffix.test(item.name) && result.push(item);
-            }
-        }
-    }
-    var src_eachFolder = eachFolder;
+    };
     function map(src, callbackfn) {
         var i = -1;
         var len = src.length;
         var result = [];
-        for (;++i < len; ) {
+        while (++i < len) {
             result.push(callbackfn(src[i], i, src));
         }
         return result;
     }
-    var LinkedList = function() {
-        function LinkedList() {
-            this.head = null;
-            this.tail = null;
+    function duffDevice(items, process) {
+        var length = items.length;
+        var iterations = length % 8;
+        var i = -1;
+        while (iterations) {
+            process(items[++i], i);
+            --iterations;
         }
-        LinkedList.prototype.append = function(value) {
-            var newNode = {
-                value: value,
-                next: null
-            };
-            null === this.head && (this.head = newNode);
-            null === this.tail && (this.tail = newNode);
-            this.tail.next = newNode;
+        iterations = Math.floor(length / 8);
+        while (iterations) {
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            process(items[++i], i);
+            --iterations;
+        }
+    }
+    var JSON = function() {
+        var parse = function(text) {
+            try {
+                return Function.call({}, "return " + text)();
+            } catch (error) {
+                throw error.line.toString() + "\n" + error.message;
+            }
         };
-        LinkedList.prototype.prepend = function(value) {
-            var newNode = {
-                value: value,
-                next: this.head
-            };
-            this.head = newNode;
-            null === this.tail && (this.tail = newNode);
-        };
-        LinkedList.prototype.find = function(value) {
-            var curNode = this.head;
-            for (;null !== curNode; ) {
-                if (curNode.value === value) {
-                    return curNode;
+        var parseArray = function(value) {
+            var result = "[";
+            var len = value.length;
+            duffDevice(value, function(data, i) {
+                switch (typeof data) {
+                  case "object":
+                    result += data === null ? "null" : stringify(data);
+                    break;
+
+                  case "function":
+                    break;
+
+                  case "undefined":
+                    result += "null";
+                    break;
+
+                  default:
+                    result += data;
                 }
-                curNode = curNode.next;
-            }
-            return null;
-        };
-        LinkedList.prototype.insertAfter = function(value, afterValue) {
-            var curNode = this.find(afterValue);
-            if (null !== curNode) {
-                var newNode = {
-                    value: value,
-                    next: curNode.next
-                };
-                curNode.next = newNode;
-            }
-        };
-        LinkedList.prototype.delete = function(value) {
-            if (null !== this.head) {
-                if (this.head.value !== value) {
-                    var curNode = this.head;
-                    for (;null !== curNode.next; ) {
-                        if (curNode.next.value === value) {
-                            curNode.next = curNode.next.next;
-                            return;
-                        }
-                        curNode = curNode.next;
-                    }
-                } else {
-                    this.head = this.head.next;
+                if (i < len - 1) {
+                    result += ",";
                 }
-            }
+            });
+            return result + "]";
         };
-        LinkedList.prototype.toArray = function() {
-            var result = [];
-            var curNode = this.head;
-            for (;null !== curNode; ) {
-                result.push(curNode.value);
-                curNode = curNode.next;
+        var parseType = function(value, key) {
+            var result = "";
+            var type = typeof value;
+            if (type === "object") {
+                result += '"' + key + '":' + (value === null && "null" || (Object.prototype.toString.call(value) === "[object Array]" && parseArray(value) || stringify(value)) + ",");
+            } else {
+                switch (type) {
+                  case "function":
+                    break;
+                  case "undefined":
+                    result += "null";
+                    break;
+                  case 'string':
+                        result += '"' + key + '":' + '"' + value + '"' + ',';
+                        break;
+                  default:
+                    result += '"' + key + '":' + value + ",";
+                    break;
+                }
             }
             return result;
         };
-        return LinkedList;
+        var stringify = function(data) {
+            var r = "{";
+            for (var key in data) {
+                if (Object.prototype.hasOwnProperty.call(data, key)) {
+                    r += parseType(data[key], key);
+                }
+            }
+            return r.substring(0, r.length - 1) + "}";
+        };
+        return {
+            parse: parse,
+            stringify: stringify
+        };
     }();
+<<<<<<< HEAD
+    function writeFile(path, content) {
+        var file = path instanceof File ? path : new File(path);
+        var folder = file.parent;
+        if (!folder.exists) {
+            folder.create();
+        }
+        return file.open("w") && file.write(content) && file.close();
+    }
+    function writeJSON(path, data) {
+        return writeFile(path, JSON.stringify(data));
+    }
+    function propertyToJSON(property, file) {
+        var result = {
+            name: property.name,
+            matchName: property.matchName,
+            expression: property.expression,
+            keys: []
+        };
+        var i = 0;
+        var len = property.numKeys;
+        while (i < len) {
+            ++i;
+            var inTemporalEase = property.keyInTemporalEase(i);
+            var inTemporalEases = map(inTemporalEase, function(k) {
+                return {
+                    influence: k.influence,
+                    speed: k.speed
+                };
+            });
+            var outTemporalEase = property.keyOutTemporalEase(i);
+            var outTemporalEases = map(outTemporalEase, function(k) {
+                return {
+                    influence: k.influence,
+                    speed: k.speed
+                };
+            });
+            result.keys.push({
+                id: i,
+                time: property.keyTime(i),
+                value: property.keyValue(i),
+                curve: {
+                    inType: property.keyInInterpolationType(i),
+                    inTemporalEases: inTemporalEases,
+                    outType: property.keyOutInterpolationType(i),
+                    outTemporalEases: outTemporalEases
+                }
+            });
+        }
+        writeJSON(file, result);
+    }
+    activeCompItemEnviron(function(compItem) {
+        var layer = compItem.layer(1);
+        propertyToJSON(layer.scale, Folder.desktop.fsName + "\\try.json");
+    });
+})(this);
+=======
     var global_LinkedList = LinkedList;
     var folder = new Folder("E:\\zd-es-lib\\src");
     var files = src_eachFolder(folder, /.ts$/);
@@ -135,3 +179,4 @@
     $.writeln(linkedList.toArray());
     $.writeln(globalThis);
 }(this);
+>>>>>>> 02c71655d56c1c8c1a36eaccc360d923bc9f6356

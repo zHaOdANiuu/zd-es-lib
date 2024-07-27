@@ -1,3 +1,5 @@
+import { BASE_CHARACTERS } from './const';
+
 function btoa(data: string): string
 {
       if ((/[^\x00-\xFF]/).test(data)) throw 'Invalid character in input string';
@@ -7,13 +9,12 @@ function btoa(data: string): string
             const binaryShiftedRight = str.charCodeAt(0) << 16
                 | (str.length > 1 ? str.charCodeAt(1) << 8 : 0)
                 | (str.length > 2 ? str.charCodeAt(2) : 0);
-            const chars = [
+            return [
                   BASE_CHARACTERS.charAt(binaryShiftedRight >>> 18),
                   BASE_CHARACTERS.charAt(binaryShiftedRight >>> 12 & 63),
                   length >= 2 ? '=' : BASE_CHARACTERS.charAt(binaryShiftedRight >>> 6 & 63),
                   length >= 1 ? '=' : BASE_CHARACTERS.charAt(binaryShiftedRight & 63)
-            ];
-            return chars.join('');
+            ].join('');
       });
 }
 

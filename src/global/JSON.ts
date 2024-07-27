@@ -1,36 +1,72 @@
-interface JSON
-{
-  parse: (text: string, reviver?: (key: string, value: PropertyKey) => unknown) => Record<string, unknown>;
-  stringify: (data: string, replacer?: (key: string, value: unknown) => unknown | string[], space?: number | string) => string;
-}
+import duffDevice from '../duffDevice';
+import { hasOwn, typeString } from './const';
 
-const JSON: JSON = {
-      parse(text, reviver)
+const JSON = (function()
+{
+      const parse = (text: string) =>
       {
-            try
+            try { return Function.call({}, 'return ' + text)(); }
+            catch (error: any) { throw error.line.toString() + '\n' + error.message; }
+      };
+      const parseArray = (value: unknown[]) =>
+      {
+            let result = '[';
+            const len = value.length;
+            duffDevice(value, (data, i) =>
             {
-                  if (text[0] !== '{') throw 'Invalid JSON';
-                  const data = Function.call({}, 'return ' + text)();
-                  if (reviver === undef) return data;
-                  let _: unknown;
-                  (function fn(value: Record<string, unknown>, key: string)
+                  switch (typeof data)
                   {
-                        if (typeof value !== 'object' || value === null) return reviver(key, value);
-                        for (const k in value)
-                        {
-                              if (!Object.prototype.hasOwnProperty.call(value, k)) continue;
-                              _ = fn(value, k);
-                              if (_ === undef) delete value[k];
-                              else value[k] = _;
-                        }
-                  }({ '': data }, ''));
-            }
-            catch (error: any)
+                        case 'object':
+                              result += data === null ? 'null' : stringify((data as object));
+                              break;
+                        case 'function':
+                              break;
+                        case 'undefined':
+                              result += 'null';
+                              break;
+                        case 'string':
+                              result += '"' + data + '"';
+                              break;
+                        default: result += data;
+                  }
+                  if (i < len - 1) result += ',';
+            });
+            return result + ']';
+      };
+      const parseType = (value: any, key: string) =>
+      {
+            let result = '';
+            const type = typeof value;
+            if (type === 'object')
+                  result += '"' + key + '":' + (value === null && 'null'
+                        || (typeString(value) === '[object Array]' && parseArray((value as []))
+                              || stringify(value)) + ',');
+            else switch (type)
             {
-                  throw error.line.toString() + '\n' + error.message;
+                  case 'function':
+                        break;
+                  case 'undefined':
+                        result += 'null';
+                        break;
+                  case 'string':
+                        result += '"' + key + '":' + '"' + value + '"' + ',';
+                        break;
+                  default:
+                        result += '"' + key + '":' + value + ',';
+                        break;
             }
-      },
-      stringify: (app as any).objectToJSON
-};
+            return result;
+      };
+      const stringify = (data: Record<string, any>) =>
+      {
+            let r = '{';
+            for (const key in data) if (hasOwn(data, key)) r += parseType(data[key], key);
+            return r.substring(0, r.length - 1) + '}';
+      };
+      return {
+            parse,
+            stringify
+      };
+}());
 
 export default JSON;

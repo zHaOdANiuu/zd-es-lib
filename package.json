@@ -1,6 +1,6 @@
 {
   "name": "zd-es-lib",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "这是一个 ExtendScript 的库,里面包含了一些常用的函数",
   "main": "index.ts",
   "types": "src/@types",
@@ -8,7 +8,9 @@
     "src",
     "package.json",
     "README.md",
-    "tsconfig.json"
+    "tsconfig.json",
+    "index.ts",
+    "index.d.ts"
   ],
   "author": "赵大牛",
   "email": "2946757613@qq.com",
@@ -17,41 +19,34 @@
   "scripts": {
     "lint": "eslint src --quiet",
     "lint:fix": "eslint src --fix",
-    "git": "git add . && git commit -m replace && git push",
-    "git:dev": "git add . && git commit -m dev && git push origin dev",
-    "es-export": "node build/export.js && eslint src/zd.ts --fix",
-    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" webpack --config ./webpack/webpack.config.ts",
-    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.json\" NODE_ENV=production webpack --config ./webpack/webpack.config.ts"
+    "git": "git add . && git commit -m dev && git push origin dev",
+    "src:export": "node tools/export.js && eslint index.ts --fix",
+    "build": "rollup -c"
   },
   "keywords": [
-    "After Effects",
-    "webpack",
-    "ExtendScript",
-    "TypeScript",
-    "scripts",
     "赵大牛",
     "zd-ae-lib",
-    "es3"
+    "ExtendScript",
+    "TypeScript",
+    "rollup",
+    "es3",
+    "After Effects"
   ],
-  "devDependencies": {
-    "@eslint/js": "^9.5.0",
-    "@stylistic/eslint-plugin-js": "^2.2.0",
-    "@stylistic/eslint-plugin-ts": "^2.2.0",
+  "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@stylistic/eslint-plugin-js": "^2.3.0",
+    "@stylistic/eslint-plugin-ts": "^2.3.0",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^20.14.2",
-    "@types/webpack": "^5.28.5",
-    "@types/webpack-sources": "^3.2.3",
-    "@webpack-cli/generators": "^3.0.7",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "globals": "^15.4.0",
-    "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2",
+    "rollup": "^4.18.1",
+    "tslib": "^2.6.3",
     "types-for-adobe": "^7.2.1",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.13.0",
-    "unplugin-auto-import": "^0.17.6",
-    "webpack": "^5.92.0",
-    "webpack-cli": "^5.1.4"
+    "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "eslint": "^9.7.0",
+    "globals": "^15.8.0",
+    "typescript-eslint": "^7.16.0"
   }
 }

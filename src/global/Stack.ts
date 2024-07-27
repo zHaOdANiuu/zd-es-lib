@@ -26,5 +26,4 @@ class Stack<T>
             return this._items.length;
       }
 }
-
 export default Stack;

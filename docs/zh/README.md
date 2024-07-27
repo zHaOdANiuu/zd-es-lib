@@ -1,36 +1,62 @@
-# 目录
+# zd-es-lib
+
+## 目录
 
 ```
 zd-es-lib
-├── build // 构建相关
-│ ├── export.js // node脚本,用于导出模块
-├── dist
-│ ├── main.js // 打包后的 js 文件
-├── src
-│ ├── @types // 类型文件夹
-│ ├── class // 类文件夹
-│ ├── event // 事件文件夹
-│ ├── global // 全局变量文件夹
-│ ├── lib // es5-es8 兼容库文件夹
-│ ├── zd.ts // 所有函数的导出
-├── index.ts // 入口文件
-└── webpack // webpack 配置
+├── dist  // 打包目录
+├── docs  // 文档目录
+├── src   // 源代码目录
+├── test  // 测试目录
+├── CHANGELOG.md // 更新日志
+├── CODE_OF_CONDUCT.md // 行为准则
+├── CONTRIBUTING.md // 贡献指南
+├── LICENSE // 许可证
+├── README.md // 介绍
+└── package.json // 包信息
 ```
 
-# [class](CLASS.md)
+## 安装
 
-# [event](EVENT.md)
+```powershell
+npm i zd-es-lib
+```
 
-# [global](GLOBAL.md)
+## 导入
 
-# [lib](LIB.md)
+`import * as _ from 'zd-es-lib';`
 
-# [function](FUNCTION.md)
+## 使用
 
-# globalThis
+tsconfig.json:
 
-- 因为 ae 的全局 this 指向是分环境的,所以需要一个约定.
-- 在开发 ae 脚本的时候,要用立即执行函数包起来,不然会造成环境污染.
-- 请遵守以下规则:
-     - 代码的整体格式应该为: `;(function(globalThis){/** ...*/}(this))`
-     - 在全局环境下,应该使用`globalThis`来代替`this`.
+```json
+{
+      "extends": "./node_modules/zd-es-lib/tsconfig.json",
+      "compilerOptions": {
+            "baseUrl":".",
+            "paths": {
+                  "zd-es-lib": ["node_modules/zd-es-lib/index.ts"]
+            },
+            "types": [
+                  "zd-es-lib/src/@types/index.d.ts"
+            ]
+      }
+}
+```
+
+**注意!!!**
+因为脚本的类型声明并不完善,所以我用ts的三斜线语法导入类型,然后更改,如果要使用原本的类型声明,
+请在`tsconfig.json`配置里的`types`里更改为:
+
+```json
+"types": ["types-for-adobe/AfterEffects/23.0"]
+```
+
+## 代码
+
+- [lib](LIB.md)
+- [global](GLOBAL.md)
+- [class](CLASS.md)
+- [function](FUNCTION.md)
+- [event](EVENT.md)

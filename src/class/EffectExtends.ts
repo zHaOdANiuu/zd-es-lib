@@ -26,14 +26,6 @@ class EffectExtends
                   if (effect.name === id || effect.matchName === id || effect.propertyIndex === id) return effect;
             }
       }
-      // importEffects()
-      // {
-
-      // }
-      // exportEffects()
-      // {
-      //       this.layer.effect.selected = true;
-      // }
 }
 
 export default EffectExtends;

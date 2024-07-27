@@ -1,21 +1,15 @@
-interface __folder<T>
+interface TreeViewFolderData
 {
-      folder: {
             path: string;
             files: string[];
-            next: __folder<T>;
-      };
+            next: TreeViewFolderData | null;
 }
-interface __node<T>
+interface TreeViewNodeData
 {
-      node: {
-            id: string;
-            lists: number[];
-            next: __node<T>;
-      };
+            id: number;
+            items: number[];
+            next: TreeViewNodeData | null;
 }
-type _folder = __folder<_folder>;
-type _node = __node<_node>;
 
 class TreeViewExtends
 {
@@ -42,8 +36,9 @@ class TreeViewExtends
             let depth = this.childDepth(next);
             if (depth === 0) return [];
             const result: number[] = [ (next as ListItem | TreeViewNode).index ];
-            while (depth--)
+            while (depth)
             {
+                  --depth;
                   next = (next.parent as unknown as TreeViewNode);
                   result.push(next.index);
             }
@@ -53,7 +48,10 @@ class TreeViewExtends
       {
             let result: ListItem | undefined;
             let root = this.treeView.items;
-            for (let i = -1, l = path.length; ++i < l;)
+
+            let i = -1;
+            const len = path.length;
+            while (++i < len)
             {
                   const index = path[i];
                   if ((root[index] as TreeViewNode).items) root = (root[index] as TreeViewNode).items;
@@ -91,8 +89,8 @@ class TreeViewExtends
             return false;
       }
       selectEnviron<T, U>(
-                  callback: (node: TreeViewNode, parent: treeViewElement) => T,
-                  callback2: (item: ListItem, parent: treeViewElement) => U
+            callback: (node: TreeViewNode, parent: treeViewElement) => T,
+            callback2: (item: ListItem, parent: treeViewElement) => U
       )
       {
             this.nodeEnviron(callback) || this.itemEnviron(callback2);
@@ -102,35 +100,36 @@ class TreeViewExtends
             let index = -1;
             const files = folder.getFiles();
             const length = files.length;
-            const result = {
-                  folder: {
-                        path:  '',
-                        files: [],
-                        next:  null
-                  },
-                  node: {
-                        id:    '',
-                        lists: [],
-                        next:  null
-                  }
-            } as unknown as _folder & _node;
+            const folderData: TreeViewFolderData = {
+                  path:  '',
+                  files: [],
+                  next:  null
+            };
+            const nodeData: TreeViewNodeData = {
+                  id:    0,
+                  items: [],
+                  next:  null
+            };
             while (++index < length)
             {
                   const file = files[index];
                   if (file instanceof File)
                   {
-                        result.folder.files.push(file.absoluteURI);
-                        result.node.lists.push(this.treeView.add('item', File.decode(file.name)).index);
+                        folderData.files.push(file.absoluteURI);
+                        nodeData.items.push(this.treeView.add('item', File.decode(file.name)).index);
                         continue;
                   }
-                  result.folder.path += file.absoluteURI;
                   const node = this.treeView.add('node', File.decode(file.name)) as unknown as TreeViewNode;
-                  result.node.id += node.index;
+                  folderData.path += file.absoluteURI;
+                  nodeData.id += node.index;
                   const recursion = this.addFolder(file);
-                  result.folder.next = { folder: recursion.folder };
-                  result.node.next = { node: recursion.node };
+                  folderData.next = recursion.folderData;
+                  nodeData.next = recursion.nodeData;
             }
-            return result;
+            return {
+                  folderData,
+                  nodeData
+            };
       }
 }
 

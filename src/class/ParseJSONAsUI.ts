@@ -1,3 +1,5 @@
+import { hasOwn } from '../global/const';
+
 class ParseJSONAsUI
 {
       static SPECIAL_PROPERTY: Record<string, boolean> = {
@@ -5,15 +7,15 @@ class ParseJSONAsUI
             children:   true,
             properties: true
       };
-      UISource: Record<string, any>;
+      public UISource: Record<string, any>;
       constructor(UISource: Record<string, unknown>)
       {
             this.UISource = UISource;
       }
       static addWindow(
-                  type: 'dialog' | 'palette' | 'window',
-                  style?: Panel | { properties?: _AddControlPropertiesWindow } | Record<string, any>,
-                  children?: Record<string, any>,
+            type: 'dialog' | 'palette' | 'window',
+            style?: Panel | { properties?: _AddControlPropertiesWindow } | Record<string, any>,
+            children?: Record<string, any>
       )
       {
             let result: Panel | Window;
@@ -26,9 +28,9 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addPanel(
-                  orientation?: _Orientation,
-                  style?: Panel | { properties?: _AddControlPropertiesPanel } | Record<string, any>,
-                  children?: Record<string, any>,
+            orientation?: _Orientation,
+            style?: Panel | { properties?: _AddControlPropertiesPanel } | Record<string, any>,
+            children?: Record<string, any>
       )
       {
             let result: Panel;
@@ -42,9 +44,9 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addGroup(
-                  orientation?: _Orientation,
-                  style?: Group | Record<string, any>,
-                  children?: Record<string, any>,
+            orientation?: _Orientation,
+            style?: Group | Record<string, any>,
+            children?: Record<string, any>
       )
       {
             let result: Panel;
@@ -58,8 +60,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addCheckbox(
-                  alignment?: _AlignmentProperty,
-                  style?: Checkbox
+            alignment?: _AlignmentProperty,
+            style?: Checkbox
       )
       {
             let result: Checkbox;
@@ -69,8 +71,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addButton(
-                  alignment?: _AlignmentProperty,
-                  style?: Button | Record<string, any>
+            alignment?: _AlignmentProperty,
+            style?: Button | Record<string, any>
       )
       {
             let result: Button;
@@ -80,8 +82,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addSlider(
-                  alignment?: _AlignmentProperty,
-                  style?: Slider
+            alignment?: _AlignmentProperty,
+            style?: Slider
       )
       {
             let result: Slider;
@@ -91,9 +93,9 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addStaticText(
-                  text?: string,
-                  alignment?: _AlignmentProperty,
-                  style?: StaticText
+            text?: string,
+            alignment?: _AlignmentProperty,
+            style?: StaticText
       )
       {
             let result: StaticText;
@@ -104,9 +106,9 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addEditText(
-                  text?: string,
-                  alignment?: _AlignmentProperty,
-                  style?: EditText | { properties?: _AddControlPropertiesEditText }
+            text?: string,
+            alignment?: _AlignmentProperty,
+            style?: EditText | { properties?: _AddControlPropertiesEditText }
       )
       {
             let result: EditText;
@@ -117,8 +119,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addDropDownList(
-                  alignment?: _AlignmentProperty,
-                  style?: DropDownList | { properties?: _AddControlPropertiesDropDownList }
+            alignment?: _AlignmentProperty,
+            style?: DropDownList | { properties?: _AddControlPropertiesDropDownList }
       )
       {
             let result: DropDownList;
@@ -128,8 +130,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addListBox(
-                  alignment?: _AlignmentProperty,
-                  style?: ListBox | { properties?: _AddControlPropertiesListBox } | Record<string, any>
+            alignment?: _AlignmentProperty,
+            style?: ListBox | { properties?: _AddControlPropertiesListBox } | Record<string, any>
       )
       {
             let result: ListBox;
@@ -139,8 +141,8 @@ class ParseJSONAsUI
             return result as Record<string, any>;
       }
       static addTreeView(
-                  alignment?: _AlignmentProperty,
-                  style?: TreeView | { properties?: _AddControlPropertiesTreeView }
+            alignment?: _AlignmentProperty,
+            style?: TreeView | { properties?: _AddControlPropertiesTreeView }
       )
       {
             let result: TreeView;
@@ -149,16 +151,26 @@ class ParseJSONAsUI
             if (alignment) result.alignment = alignment;
             return result as Record<string, any>;
       }
-      InstalledUI(): Window | Panel
+      static addImage(
+            image?: ScriptUIImage,
+            alignment?: _AlignmentProperty,
+            style?: Image | { properties?: _AddControlProperties }
+      )
+      {
+            let result: Image;
+            if (style) result = (style as any); else result = {} as Image;
+            (result as any).type = 'image';
+            if (image) result.image = image;
+            if (alignment) result.alignment = alignment;
+            return result as Record<string, any>;
+      }
+      public InstalledUI(globalThis?: globalThis): Window | Panel
       {
             const newType = this._propertiesParser(this.UISource);
             const WINDOW: any = globalThis instanceof Panel ? globalThis : new Window(newType);
             for (const k in this.UISource)
-            {
-                  if (!Object.prototype.hasOwnProperty.call(this.UISource, k)) continue;
-                  if (ParseJSONAsUI.SPECIAL_PROPERTY[k]) continue;
-                  WINDOW[k] = this.UISource[k];
-            }
+                  if (hasOwn(this.UISource, k) && !ParseJSONAsUI.SPECIAL_PROPERTY[k])
+                        WINDOW[k] = this.UISource[k];
             this._installedControl(this.UISource.children, WINDOW);
             WINDOW.layout.layout(true);
             WINDOW.layout.resize();
@@ -180,7 +192,7 @@ class ParseJSONAsUI
             if (!value.properties) return value.type;
             let str = '';
             for (const k in value.properties)
-                  if (Object.prototype.hasOwnProperty.call(value.properties, k))
+                  if (hasOwn(value.properties, k))
                         str += k + ':' + this._argumentsParser(value.properties[k]) + ',';
             return value.type + '{properties:{' + str + '}}';
       }
@@ -188,16 +200,13 @@ class ParseJSONAsUI
       {
             for (const k in children)
             {
-                  if (!Object.prototype.hasOwnProperty.call(children, k)) continue;
+                  if (!hasOwn(children, k)) continue;
                   const newType = this._propertiesParser(children[k]);
                   const ELEMENT = (parent as any)[k] = parent.add(newType) as any;
                   if (children[k].children) this._installedControl(children[k].children, ELEMENT as Group | Panel);
                   for (const j in children[k])
-                  {
-                        if (!Object.prototype.hasOwnProperty.call(children[k], j)) continue;
-                        if (ParseJSONAsUI.SPECIAL_PROPERTY[j]) continue;
-                        ELEMENT[j] = children[k][j];
-                  }
+                        if (hasOwn(children[k], j) && !ParseJSONAsUI.SPECIAL_PROPERTY[j])
+                              ELEMENT[j] = children[k][j];
             }
       }
 }
