@@ -20,7 +20,6 @@ export {
       eachSelectedProperties,
       findCompItem
 } from './src/Ae';
-export { TreeViewExtends } from './src/class/TreeViewExtends';
 export {
       undef,
       BASE_CHARACTERS,
@@ -29,6 +28,9 @@ export {
       FILE_SUFFIX,
       FILE_WILDCARD,
       MIN_IMAGE,
+      hasOwn,
+      typeString,
+      toArray,
       isEmptyArray,
       isEmptyObject,
       escapeRegExp,
@@ -91,8 +93,7 @@ export { default as padArrayWithZeros } from './src/base/padArrayWithZeros';
 export { default as EffectExtends } from './src/class/EffectExtends';
 export { default as ParseJSONAsUI } from './src/class/ParseJSONAsUI';
 export { default as PropertyExtends } from './src/class/PropertyExtends';
-export { default as ShapeLayerExtends } from './src/class/ShapeLayerExtends';
-export { default as Folder } from './src/class/TreeViewExtends';
+export { default as TreeViewExtends } from './src/class/TreeViewExtends';
 export { default as addButtonDown } from './src/event/addButtonDown';
 export { default as addButtonToLeftAndRight } from './src/event/addButtonToLeftAndRight';
 export { default as drawPath } from './src/event/drawPath';
@@ -111,5 +112,4 @@ export { default as JSON } from './src/global/JSON';
 export { default as LinkedList } from './src/global/LinkedList';
 export { default as Queue } from './src/global/Queue';
 export { default as Stack } from './src/global/Stack';
-export { default as Vector } from './function/Vector';
 export { default as $$$ColorPicker } from './src/script/$$$ColorPicker';

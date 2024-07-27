@@ -104,6 +104,7 @@
             stringify: stringify
         };
     }();
+<<<<<<< HEAD
     function writeFile(path, content) {
         var file = path instanceof File ? path : new File(path);
         var folder = file.parent;
@@ -159,3 +160,23 @@
         propertyToJSON(layer.scale, Folder.desktop.fsName + "\\try.json");
     });
 })(this);
+=======
+    var global_LinkedList = LinkedList;
+    var folder = new Folder("E:\\zd-es-lib\\src");
+    var files = src_eachFolder(folder, /.ts$/);
+    $.writeln(map(files, function(file) {
+        return file.name;
+    }).toString());
+    var linkedList = new global_LinkedList;
+    linkedList.append(1);
+    linkedList.append(2);
+    linkedList.append(3);
+    linkedList.prepend(0);
+    linkedList.insertAfter(3, 2);
+    linkedList.append(4);
+    linkedList.append(5);
+    linkedList.delete(4);
+    $.writeln(linkedList.toArray());
+    $.writeln(globalThis);
+}(this);
+>>>>>>> 02c71655d56c1c8c1a36eaccc360d923bc9f6356
