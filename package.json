@@ -1,0 +1,53 @@
+{
+  "name": "zd-es-lib",
+  "version": "1.0.1",
+  "description": "一个 ExtendScript 的库,基于AE脚本开发",
+  "main": "index.ts",
+  "types": "src/@types/index.d.ts",
+  "author": "赵大牛",
+  "email": "2946757613@qq.com",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/zHaOdANiuu/zd-es-lib",
+  "scripts": {
+    "build": "rollup -c",
+    "pack": "npm pack",
+    "lint": "eslint src --quiet",
+    "lint:fix": "eslint src --fix",
+    "link": "npm link --no-save zd-es-lib && cd package && npm init -y && npm link --no-save zd-es-lib",
+    "unlink": "npm unlink --no-save zd-es-lib && cd ../ && Remove-Item -Recurse -Force package/* && npm --no-save unlink"
+  },
+  "keywords": [
+    "赵大牛",
+    "zd-ae-lib",
+    "ExtendScript",
+    "TypeScript",
+    "rollup",
+    "es3",
+    "After Effects"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
+    "eslint": "^8.57.0",
+    "rollup": "^4.19.1",
+    "tslib": "^2.6.3",
+    "types-for-adobe": "^7.2.1",
+    "typescript": "^5.5.4"
+  },
+  "files": [
+    "src/**/*",
+    "index.ts",
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/@types/index.d.ts",
+      "import": "./index.ts"
+    }
+  }
+}
