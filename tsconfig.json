@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "preserve",
-    "target": "ES3",
+    "target": "ES5",
     "ignoreDeprecations": "5.0",
     "module": "ES6",
     "outDir": "./dist/",
@@ -21,5 +21,11 @@
   "include": [
     "index.ts",
     "src"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": [
+      "index.ts"
+    ],
+    "out": "docs"
+  }
 }

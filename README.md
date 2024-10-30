@@ -2,9 +2,7 @@
 
 **Hi~ o(_￣ ▽ ￣_)ブ**
 
-- [中文文档](https://zhaodaniuu.github.io/zd-es-lib/docs/zh)
-
-- [English Documentation](https://zhaodaniuu.github.io/zd-es-lib/docs/en)
+- [文档](https://zhaodaniuu.github.io/zd-es-lib/docs/modules.html)
 
 ## 介绍
 
@@ -12,7 +10,3 @@
 - 库的目的是为了方便开发 After Effects 脚本.
 - 基于 ts 开发,用 rollup 打包.
 - 目前这个库还在开发中,欢迎大家提出宝贵意见.
-
-## 参考
-
-**src/global/atob.ts, src/global/btoa.ts => [base64](https://github.com/davidchambers/Base64.js)**
