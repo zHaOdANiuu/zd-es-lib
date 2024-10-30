@@ -2,8 +2,6 @@
 
 **Hi~ o(_￣ ▽ ￣_)ブ**
 
-- [文档](https://zhaodaniuu.github.io/zd-es-lib/docs/modules.html)
-
 ## 介绍
 
 - 一个 ExtendScript 的库,里面包含了一些常用的函数.
