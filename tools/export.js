@@ -12,7 +12,7 @@ const output = rootDir + '/index.ts';
 const exportDefaultArr = [];
 const exportArr = [];
 const exportDefaultReg = /export default ([^)]+)(?=;)/;
-const exportReg = /export (const|class) (\w+)/g;
+const exportReg = /export (const|function|class) (\w+)/g;
 const exportAllReg = /export {[^(]+}/;
 const pathReg = /\.ts$/;
 
