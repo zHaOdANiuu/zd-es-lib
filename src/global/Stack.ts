@@ -1,29 +1,42 @@
+import { indexOf } from '../lib/es5';
+
+/** 栈 */
 class Stack<T>
 {
-      private _items: T[];
+      private items: T[];
       constructor()
       {
-            this._items = [];
+            this.items = [];
       }
       push(value: T): void
       {
-            this._items.push(value);
+            this.items.push(value);
       }
       pop(): T | undefined
       {
-            return this._items.pop();
+            return this.items.pop();
       }
       peek(): T
       {
-            return this._items[this._items.length - 1];
+            return this.items[this.items.length - 1];
       }
       isEmpty(): boolean
       {
-            return this._items.length === 0;
+            return this.items.length === 0;
       }
-      size(): number
+      clear(): void
       {
-            return this._items.length;
+            this.items = [];
+      }
+      remove(value: T): void
+      {
+            const index = indexOf(this.items, value);
+            if (index > -1) this.items.splice(index, 1);
+      }
+      each(f: (value: T) => void)
+      {
+            let i = this.items.length;
+            while (i) f(this.items[--i]);
       }
 }
 

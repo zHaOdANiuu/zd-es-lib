@@ -5,7 +5,7 @@ declare const aftereffects: any;
 
 declare const globalThis: object | Panel;
 
-declare function alert(message: any, title?: string, errorIcon?: boolean): void;
+declare type int = NumberRange<0, 256>;
 
 declare type NonNullable<T> = T & object;
 
@@ -21,9 +21,7 @@ declare type PropertyKey = string | number | symbol;
 
 declare type NormalizeValue = NumberRange<0, 1>;
 
-declare type MonoValue = NumberRange<0, 256>;
-
-declare type RgbValue = [MonoValue, MonoValue, MonoValue];
+declare type RgbValue = [int, int, int];
 
 declare type RgbNormalizeValue = [NormalizeValue, NormalizeValue, NormalizeValue];
 
@@ -153,6 +151,12 @@ declare interface File
       open(mode: FileOpenMode, type?: string, creator?: string): boolean;
 }
 
+declare interface Function
+{
+      apply(thisObj: any, args: any): any;
+      call(thisObj: object, ...arguments: any[]): any;
+}
+
 declare interface StringConstructor
 {
       fromCharCode(...codes: number[]): string;
@@ -174,12 +178,6 @@ declare interface RegExp
       global: boolean;
 }
 
-declare interface $
-{
-      unwatch(name: string): void;
-      watch(name: string, func: AnyFunction): void;
-}
-
 declare interface Error
 {
       end: number;
@@ -190,6 +188,12 @@ declare interface Error
       number: number;
       source: string;
       start: number;
+}
+
+declare interface $
+{
+      unwatch(name: string): void;
+      watch(name: string, func: AnyFunction): void;
 }
 
 declare interface _Control
@@ -236,11 +240,6 @@ declare interface Image
 {
       text: string;
       notify(eventName?: string): void;
-}
-
-declare interface ScriptUI
-{
-      newFont(name: string, style: number, size: number): ScriptUIFont;
 }
 
 declare interface Window

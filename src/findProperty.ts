@@ -1,17 +1,13 @@
 /**
- *
- * @param group
- * @param path
- * @returns
- * @example
- * findProperty(group, 'a/b/c')
+ * 查找属性组中的属性,以'/'为分隔符
+ * @example findProperty(group, 'a/b/c')
  */
 function findProperty(group: PropertyGroup, path: string): _PropertyClasses
 {
       let i = -1;
       const names = path.split('/');
-      const len = names.length;
-      while (++i < len) (group as any) = group.property(names[i]);
+      const { length } = names;
+      while (++i < length) (group as any) = group.property(names[i]);
       return group;
 }
 

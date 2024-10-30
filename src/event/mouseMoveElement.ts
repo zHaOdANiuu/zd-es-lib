@@ -1,5 +1,6 @@
 import mouseMoveEnviron from './mouseMoveEnviron';
 
+/** 给控件添加移动事件 */
 function mouseMoveElement<T extends _Control>(element: T, callback: (this: T, event: MouseEvent) => void)
 {
       mouseMoveEnviron(element, function(e)

@@ -14,7 +14,7 @@ interface Options
  *    title:       'string',
  *    maxProgress: 1000
  * });
- * for (let i = -1; ++i < 1000;) w(1, i.toString());
+ * for (let i = -1; ++i < 1000;) w(1, '' + i);
  */
 function $$$LoadWindow(options: Options)
 {
@@ -23,7 +23,7 @@ function $$$LoadWindow(options: Options)
       const statText = win.add('statictext');
       if (options.progressBarSize) prog.size = options.progressBarSize;
       win.alignChildren = [ 'fill', 'fill' ]; statText.justify = 'center'; win.show();
-      ($$$LoadWindow as any).close = () => win.close();
+      ($$$LoadWindow as any).close = () => { win.close(); };
       return (loadValue: number, loadText: string) =>
       {
             prog.value = prog.value + loadValue; statText.text = loadText; win.update();

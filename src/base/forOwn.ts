@@ -1,4 +1,4 @@
-import { hasOwn } from '../global/const';
+import { hasOwn } from './const';
 
 function forOwn<T extends object>(object: T, callback: ObjectIterator<T, void>)
 {

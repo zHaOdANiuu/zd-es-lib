@@ -8,6 +8,14 @@ interface Options extends Style
       size: number[];
 }
 
+const _intFillWithStroke = (graph: ScriptUIGraphics, options: Options | Style) =>
+{
+      options.stroke &&
+                  graph.strokePath(graph.newPen(0, options.stroke[0], options.stroke[1]));
+      options.fill && graph.fillPath(graph.newBrush(0, options.fill));
+};
+
+/** 用于绘制UI的工具函数 */
 const Graphics = {
       setFgColor(element: StaticText | ListBox | TreeView, color: number[])
       {
@@ -66,7 +74,7 @@ const Graphics = {
                   options.size[0] - offset,
                   options.size[1] - offset
             );
-            this._intFillWithStroke(graph, options);
+            _intFillWithStroke(graph, options);
       },
       drawCircle(graph: ScriptUIGraphics, position: number[], options: Options)
       {
@@ -79,7 +87,7 @@ const Graphics = {
                   options.size[0] - offset,
                   options.size[1] - offset
             );
-            this._intFillWithStroke(graph, options);
+            _intFillWithStroke(graph, options);
       },
       drawString(
             graph: ScriptUIGraphics,
@@ -99,7 +107,7 @@ const Graphics = {
             let i = 0;
             const { length } = points;
             while (i < length) graph.lineTo(points[++i][0], points[i][1]);
-            this._intFillWithStroke(graph, style);
+            _intFillWithStroke(graph, style);
             close && graph.closePath();
       },
       drawGrid(graph: ScriptUIGraphics, size: number[], row: number, col: number, stroke: [color: number[], width: number])
@@ -122,12 +130,6 @@ const Graphics = {
                   }
             }
             graph.strokePath(graph.newPen(0, stroke[0], stroke[1]));
-      },
-      _intFillWithStroke(graph: ScriptUIGraphics, options: Options | Style)
-      {
-            options.stroke &&
-                  graph.strokePath(graph.newPen(0, options.stroke[0], options.stroke[1]));
-            options.fill && graph.fillPath(graph.newBrush(0, options.fill));
       }
 };
 

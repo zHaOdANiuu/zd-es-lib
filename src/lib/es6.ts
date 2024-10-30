@@ -1,10 +1,10 @@
+import { isUndefined } from '../base/const';
+import forOwn from '../base/forOwn';
+
 //---------------------------------------
 // Array
-
-import forOwn from '../base/forOwn';
-import { undef } from '../global/const';
-
 //---------------------------------------
+
 function find<T, S extends T>(src: T[], predicate: (value: T, index: number, obj: T[]) => value is S): S | undefined;
 function find<T>(src: T[], predicate: (value: T, index: number, obj: T[]) => unknown): T | undefined
 {
@@ -33,8 +33,8 @@ function findIndex<T>(src: T[], predicate: (value: T, index: number, obj: T[]) =
 
 function fill<T>(src: T[], value: T, start?: number, end?: number): T[]
 {
-      if (start === undef) start = -1;
-      if (end === undef) end = src.length;
+      if (isUndefined(start)) start = -1;
+      if (isUndefined(end)) end = src.length;
       let i = start;
       while (++i < end) src.push(value);
       return src;
@@ -49,8 +49,8 @@ function from<T>(arrayLike: ArrayLike<T>, mapfn?: (v: T, k: number) => T): T[]
 {
       let i = -1;
       const len = arrayLike.length;
-      const result = new Array(len);
-      if (mapfn === undef) while (++i < len) result[i] = arrayLike[i];
+      const result = Array(len);
+      if (isUndefined(mapfn)) while (++i < len) result[i] = arrayLike[i];
       else while (++i < len) result[i] = mapfn(arrayLike[i], i);
       return result;
 }
@@ -61,16 +61,15 @@ function from<T>(arrayLike: ArrayLike<T>, mapfn?: (v: T, k: number) => T): T[]
 
 function assign<T extends object, U>(target: T, source: U): T & U;
 function assign<T extends object, U, V>(target: T, source1: U, source2: V): T & U & V;
-function assign<T extends object, U, V, W>(target: T, _source1?: U, _source2?: V, _source3?: W): T & U & V & W
+function assign<T extends object, U extends Record<string, any>, V extends Record<string, any>, W extends Record<string, any>>(target: T, _source1?: U, _source2?: V, _source3?: W): T & U & V & W
 {
-      if (target === null) throw 'TypeError: Cannot convert undefined or null to object';
       let i = -1;
-      const sources: [U, V, W] = Array.prototype.slice.call(arguments, 1);
+      const sources = Array.prototype.slice.call(arguments, 1);
       const len = sources.length;
       while (++i < len)
       {
             const nextSource = sources[i];
-            if (nextSource === null || nextSource === undef) continue;
+            if (typeof nextSource !== 'object') continue;
             forOwn(nextSource, (value, key) => { (target as any)[key] = value; });
       }
       return target as T & U & V & W;
@@ -82,10 +81,14 @@ function assign<T extends object, U, V, W>(target: T, _source1?: U, _source2?: V
 
 function repeat(src: string, count: number): string
 {
-      let result = '';
-      let i = -1;
-      while (++i < count) result += src;
-      return result;
+      return Array(count + 1).join(src);
 }
 
-export { find, findIndex, fill, from, assign, repeat };
+export {
+      find,
+      findIndex,
+      fill,
+      from,
+      assign,
+      repeat
+};

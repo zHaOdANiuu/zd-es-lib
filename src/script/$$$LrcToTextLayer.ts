@@ -1,5 +1,5 @@
-import { isCompItem } from './base/const';
-import readLnFile from './readLnFile';
+import { isCompItem } from '../base/const';
+import readLnFile from '../readLnFile';
 
 interface lrcConfig
 {
@@ -7,7 +7,7 @@ interface lrcConfig
       text: string;
 }
 
-function lrcToTextLayer(lrcFile: File): void
+function $$$LrcToTextLayer(lrcFile: File): void
 {
       app.beginUndoGroup('Import LRC to Text Layer');
       let targetComp = app.project.activeItem;
@@ -33,4 +33,4 @@ function lrcToTextLayer(lrcFile: File): void
       app.endUndoGroup();
 }
 
-export default lrcToTextLayer;
+export default $$$LrcToTextLayer;

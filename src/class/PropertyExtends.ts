@@ -1,3 +1,4 @@
+/** 属性的扩展,调用此类,可以访问属性对应的图层和合成 */
 class PropertyExtends
 {
       comp: CompItem;

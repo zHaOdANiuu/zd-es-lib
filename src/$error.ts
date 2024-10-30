@@ -1,3 +1,4 @@
+/** 一个更详细的抛出 */
 function $error(error: Error)
 {
       alert (`#line: ${error.line};

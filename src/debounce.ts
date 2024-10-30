@@ -1,14 +1,15 @@
-import { nativeSlice, undef } from '../global/const';
+import { isUndefined, nativeSlice } from './base/const';
 
 function debounce(fn: AnyFunction, duration?: number)
 {
-      if (duration === undef) duration = 1000;
+      if (isUndefined(duration)) duration = 1000;
+      let timerID = 0;
       return function(this: any)
       {
+            app.cancelTimeout(timerID);
             const args = nativeSlice.call(arguments);
-            const timerID = app.setTimeout(() =>
+            timerID = app.setTimeout(() =>
             {
-                  app.cancelTimeout(timerID);
                   fn.apply(this, args);
             }, duration);
       };

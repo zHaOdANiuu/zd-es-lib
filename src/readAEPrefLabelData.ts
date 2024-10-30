@@ -1,7 +1,8 @@
-import Color from './global/Color';
 import { map } from './lib/es5';
+import Color from './global/Color';
 import readLnFile from './readLnFile';
 
+/** 读取首选项的颜色标签数据 */
 function readAEPrefLabelData()
 {
       const appVersion = app.version.substring(0, 4);
@@ -10,7 +11,7 @@ function readAEPrefLabelData()
             zh_CN: initPath + ' 设置-indep-general.txt',
             en_US: initPath + ' Prefs-indep-general.txt'
       };
-      const prefFile = new File(prefPath[app.isoLanguage as keyof typeof prefPath]);
+      const prefFile = File(prefPath[app.isoLanguage as keyof typeof prefPath]);
       const labelKeys: string[] = [];
       readLnFile(prefFile, str =>
       {

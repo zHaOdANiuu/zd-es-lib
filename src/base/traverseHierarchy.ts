@@ -1,4 +1,4 @@
-import { undef } from '../global/const';
+import { isUndefined } from './const';
 
 /** 遍历结构 => object.parent.parent.parent */
 function traverseHierarchy
@@ -10,7 +10,7 @@ function traverseHierarchy
 )
 {
       let current = obj[propertyName];
-      if (callback === undef) while (!condition(current)) current = current[propertyName];
+      if (isUndefined(callback)) while (!condition(current)) current = current[propertyName];
       else while (!condition(current)) callback(current = current[propertyName]);
       return current;
 }

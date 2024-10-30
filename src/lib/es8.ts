@@ -1,9 +1,16 @@
+import forOwn from '../base/forOwn';
+
 //---------------------------------------
 // ObjectConstructor
 //---------------------------------------
 
-import forOwn from '../base/forOwn';
-
+/**
+ * 获取对象所有属性的键值对数组
+ * @param o 对象
+ * @returns 属性的键值对数组
+ * @example
+ * alert(entries({ a: 1, b: 2, c: 3 })); // [ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] ]
+ */
 function entries(o: object): [string, any][];
 function entries<T>(o: Record<string, T> | ArrayLike<T>): [string, T][]
 {
@@ -31,4 +38,8 @@ function padEnd(src: string, maxLength: number, fillString = ' '): string
       return src + Array(maxLength - src.length).join(fillString);
 }
 
-export { entries, padStart, padEnd };
+export {
+      entries,
+      padStart,
+      padEnd
+};

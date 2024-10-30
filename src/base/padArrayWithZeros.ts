@@ -1,9 +1,9 @@
 function padArrayWithZeros(array: unknown[], targetLength: number)
 {
-      let len = array.length;
-      while (len < targetLength)
+      let { length } = array;
+      while (length < targetLength)
       {
-            ++len;
+            ++length;
             array.push(0);
       }
 }

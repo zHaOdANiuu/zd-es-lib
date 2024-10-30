@@ -1,3 +1,4 @@
+/** 复制文本到粘贴板 */
 function copyToClipboard(text: string)
 {
       if (Folder.fs === 'Windows')

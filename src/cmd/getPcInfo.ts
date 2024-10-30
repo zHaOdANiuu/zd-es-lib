@@ -1,6 +1,6 @@
-import { trim, trimEnd } from './lib/es5';
+import { trim, trimEnd } from '../lib/es5';
 
-function pcInfo()
+function getPcInfo()
 {
       const result: Record<'Description' | 'MACAddress' | 'PNPDeviceID', string>[] = [];
       const winData = system
@@ -23,4 +23,4 @@ function pcInfo()
       return result;
 }
 
-export default pcInfo;
+export default getPcInfo;

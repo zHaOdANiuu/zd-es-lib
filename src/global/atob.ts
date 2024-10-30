@@ -1,8 +1,9 @@
-import { BASE_CHARACTERS_TAB } from './const';
+import { BASE_CHARACTERS_TAB } from '../base/const';
 
+/** base64的解码 */
 function atob(data: string): string
 {
-      return data.replace(/[^A-Za-z0-9+/]/g, '').replace(/\S{1,4}/g, str =>
+      return data.replace(RegExp('[^A-Za-z0-9+/]', 'g'), '').replace(/\S{1,4}/g, str =>
       {
             const length = str.length;
             const binaryShiftedRight = (length > 0 ? BASE_CHARACTERS_TAB[str.charAt(0)] << 18 : 0)

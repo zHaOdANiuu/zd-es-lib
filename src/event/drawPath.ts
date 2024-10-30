@@ -1,5 +1,15 @@
 import { forEach } from '../lib/es5';
 
+/**
+ * 绘制路径
+ * @param graphics ScriptUIGraphics
+ * @param position [number, number] 起点坐标
+ * @param points [[number, number]] 路径上的点坐标数组
+ * @param isClosed boolean 是否闭合
+ * @param fillColor [number, number] 填充颜色
+ * @param strokeWidth number 线宽
+ * @param strokeColor [number, number] 线颜色
+ */
 function drawPath(
       graphics: ScriptUIGraphics,
       position: [number, number],

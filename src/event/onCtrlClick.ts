@@ -8,7 +8,7 @@ function onCtrlClick<T extends _Control>(element: T, callback: (this: T, event: 
 {
       element.addEventListener('click', e =>
       {
-            e.ctrlKey === true
+            e.ctrlKey
             && e.button === 0
             && e.detail === 1
             && callback.call(element, e);

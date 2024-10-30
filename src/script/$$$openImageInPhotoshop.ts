@@ -2,14 +2,23 @@ import { eachSelectedLayers } from '../Ae';
 import { isAVLayer, isFile } from '../base/const';
 import exe from '../exe';
 
-function $$$openImageInPhotoshop()
+/** 在ae里选择一个是图片素材的图层以后,调用此函数,将会用ps打开图片 */
+function $$$OpenImageInPhotoshop()
 {
       const appSpecifier = 'photoshop';
       eachSelectedLayers(layer =>
       {
-            if (!isAVLayer(layer)) throw '请选择一个素材图层';
+            if (!isAVLayer(layer))
+            {
+                  alert ('请选择一个素材图层');
+                  return;
+            }
             const mainSource = layer.source.mainSource;
-            if (!isFile(mainSource.file)) throw '素材图层没有文件源';
+            if (!isFile(mainSource.file))
+            {
+                  alert('素材图层没有文件源');
+                  return;
+            }
             const img = mainSource.file;
             exe(appSpecifier, 'app.open(' + img.toSource() + ')', () =>
             {
@@ -20,4 +29,4 @@ function $$$openImageInPhotoshop()
       });
 }
 
-export default $$$openImageInPhotoshop;
+export default $$$OpenImageInPhotoshop;

@@ -1,10 +1,51 @@
+import { isUndefined, nativeSlice } from '../base/const';
+import forOwn from '../base/forOwn';
 
 //---------------------------------------
 // Array
 //---------------------------------------
 
-import forOwn from '../base/forOwn';
-import { nativeSlice } from '../global/const';
+/**
+ * 数组的 indexOf 方法
+ * @param src 数组
+ * @param searchElement 搜索的元素
+ * @param fromIndex 开始搜索的索引
+ * @returns 搜索到的索引，没找到返回 -1
+ * @example
+ * const arr = [1, 2, 3, 4, 5];
+ * alert(indexOf(arr, 3)); // 2
+ * alert(indexOf(arr, 6)); // -1
+ */
+function indexOf<T>(src: T[], searchElement: T, fromIndex?: number)
+{
+      const { length } = src;
+      if (isUndefined(fromIndex)) fromIndex = 0;
+      else if (fromIndex < 0) fromIndex = Math.max(0, length + fromIndex);
+      let i = fromIndex - 1;
+      while (++i < length) if (src[i] === searchElement) return i;
+      return -1;
+}
+
+/**
+ * 数组的 lastIndexOf 方法,从后往前搜索,
+ * @param src 数组
+ * @param searchElement 搜索的元素
+ * @param fromIndex 开始搜索的索引
+ * @returns 搜索到的索引，没找到返回 -1
+ * @example
+ * const arr = [1, 2, 3, 4, 5];
+ * alert(lastIndexOf(arr, 3)); // 2
+ * alert(lastIndexOf(arr, 6)); // -1
+ */
+function lastIndexOf<T>(src: T[], searchElement: T, fromIndex?: number)
+{
+      const { length } = src;
+      if (isUndefined(fromIndex)) fromIndex = 0;
+      else if (fromIndex < 0) fromIndex = Math.max(0, length + fromIndex);
+      let i = fromIndex + 1;
+      while (--i >= 0) if (src[i] === searchElement) return i;
+      return -1;
+}
 
 function forEach<T>(src: T[], callbackfn: (value: T, index: number, array: T[]) => void): void
 {
@@ -17,7 +58,7 @@ function map<T, U>(src: T[], callbackfn: (value: T, index: number, array: T[]) =
 {
       let i = -1;
       const len = src.length;
-      const result = new Array(len);
+      const result = Array(len);
       while (++i < len) result[i] = callbackfn(src[i], i, src);
       return result;
 }
@@ -27,7 +68,7 @@ function filter<T>(src: T[], predicate: (value: T, index: number, array: T[]) =>
 {
       let i = -1;
       const len = src.length;
-      const result = new Array(len);
+      const result = Array(len);
       while (++i < len) if (predicate(src[i], i, src)) result[i] = src[i];
       return result;
 }
@@ -102,4 +143,17 @@ function trimStart(src: string): string
       return src.replace(/^[\s\uFEFF\xA0]+/, '');
 }
 
-export { forEach, map, filter, reduce, create, keys, bind, trim, trimEnd, trimStart };
+export {
+      indexOf,
+      lastIndexOf,
+      forEach,
+      map,
+      filter,
+      reduce,
+      create,
+      keys,
+      bind,
+      trim,
+      trimEnd,
+      trimStart
+};

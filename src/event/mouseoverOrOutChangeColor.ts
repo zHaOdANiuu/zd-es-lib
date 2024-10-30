@@ -1,6 +1,7 @@
 import Graphics from '../global/Graphics';
 import mouseoverOrOut from './mouseoverOrOut';
 
+/** 有待考察 */
 function mouseoverOrOutChangeColor(
       controlObj: Button | Image | CustomView,
       overColor: number[],
@@ -11,12 +12,12 @@ function mouseoverOrOutChangeColor(
 )
 {
       let defaultColor = outColor;
-      const _font = font && ScriptUI.newFont(font.name, font.style, font.size);
+      const _font = font && ScriptUI.newFont(font.name, (font.style as unknown as string), font.size);
       const space = controlObj.size[0] - controlObj.graphics.measureString(controlObj.text, _font)[0];
       const x = {
             left:   0,
             center: space / 2,
-            right:  controlObj.size[0] - space
+            right:  controlObj.size[0] / 2 - space * 2
       }[justify];
       controlObj.onDraw = function()
       {

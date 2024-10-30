@@ -1,6 +1,6 @@
 class Grid
 {
-      cache: unknown[][] = [];
+      private cache: unknown[][] = [];
       constructor(width: number, height: number)
       {
             for (let i = width; i--;)

@@ -1,7 +1,8 @@
-import { timeToFrames, framesToTime } from '../index';
-import { activeCompItemEnviron } from './Ae';
+import { framesToTime, timeToFrames } from './base/const';
 import { padStart } from './lib/es8';
+import { activeCompItemEnviron } from './Ae';
 
+/** 保存帧序列为PNG序列到文件夹,帧序列的开始和结束由工作区的开头和结束决定 */
 function saveFrameSequenceToPNGSequence(folder: Folder)
 {
       activeCompItemEnviron(compItem =>
@@ -13,7 +14,7 @@ function saveFrameSequenceToPNGSequence(folder: Folder)
             {
                   compItem.saveFrameToPng(
                         framesToTime(i, fps),
-                        new File(`${folder.fsName}/${compItem.name}_#${padStart(i.toString(), 4, '0')}.png`)
+                        File(`${folder.fsName}/${compItem.name}_#${padStart(i.toString(), 4, '0')}.png`)
                   );
                   ++i;
             }

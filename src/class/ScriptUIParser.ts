@@ -1,9 +1,9 @@
+import { hasOwn, isString, isUndefined } from '../base/const';
 import forOwn from '../base/forOwn';
 import objectPath from '../base/objectPath';
-import duffDevice from '../duffDevice';
-import { hasOwn, undef } from '../global/const';
-import JSON from '../global/JSON';
 import { assign } from '../lib/es6';
+import JSON from '../global/JSON';
+import duffDevice from '../duffDevice';
 
 type ElementProperties<T, U> =
       | (T & { properties: U; id: string; className: string; namespace: string })
@@ -51,23 +51,40 @@ interface AddElement
       (type: 'customview', style: ElementProperties<CustomView, _AddControlProperties>): any;
 }
 
+/**
+ * 脚本UI的解析器
+ * @example
+ * const _ = ScriptUIParser;
+ * const document = new _(_.addContainer(
+ * 'window',
+ * { maximumSize: [ 250, 480 ], properties: { resizeable: true } },
+ * [ _.addElement('button', { id: 'btn' }) ]
+ * ));
+ * const { window } = document;
+ * if (globalThis === $.global)
+ * {
+ *     window.text = 'test';
+ *     window.show();
+ * }
+ * document.getElementById('btn').onClick = function () { alert('1') };
+ */
 class ScriptUIParser
 {
       window: Window;
-      private _namespace: AnyObject = { std: {} };
+      private namespace: AnyObject = { std: {} };
       constructor(src: AnyArray)
       {
             const window =
                   globalThis === $.global
                         ? new Window(this.properties(src))
                         : (globalThis as unknown as Window);
-            this.addUI(src[2], window, this._namespace);
-            this._namespace.std = {
-                  idPointer:    this._namespace.idPointer,
-                  classPointer: this._namespace.classPointer
+            this.addUI(src[2], window, this.namespace);
+            this.namespace.std = {
+                  idPointer:    this.namespace.idPointer,
+                  classPointer: this.namespace.classPointer
             };
-            delete this._namespace.idPointer;
-            delete this._namespace.classPointer;
+            delete this.namespace.idPointer;
+            delete this.namespace.classPointer;
             this.window = window;
             if (!src[1].margins) window.margins = 0;
             if (!src[1].spacing) window.spacing = 0;
@@ -88,7 +105,7 @@ class ScriptUIParser
             if (!data) return;
             duffDevice(data, v =>
             {
-                  if (typeof v === 'string')
+                  if (isString(v))
                   {
                         parent.add(v as any);
                         return;
@@ -135,9 +152,18 @@ class ScriptUIParser
                   }
             });
       }
+      /**
+       * 解析选择器
+       * @param tab 选择器表
+       * @param namespace? 命名空间,默认为std
+       * @example
+       * document.parseSelectors({
+       *     '#btn': { text: 'abc' },
+       * })
+       */
       parseSelectors(tab: Record<`${string | 'std'}::`, AnyObject>, namespace?: AnyObject)
       {
-            if (namespace === undef) namespace = this._namespace;
+            if (isUndefined(namespace)) namespace = this.namespace;
             forOwn(tab, (v, k) =>
             {
                   const _k = k.substr(1);
@@ -177,9 +203,9 @@ class ScriptUIParser
             namespacePath?: string
       )
       {
-            if (namespacePath === undef) namespacePath = 'std';
+            if (isUndefined(namespacePath)) namespacePath = 'std';
             duffDevice(
-                  objectPath(this._namespace, namespacePath, '::').classPointer[className],
+                  objectPath(this.namespace, namespacePath, '::').classPointer[className],
                   (e, i) =>
                   {
                         callback(e as any, i);
@@ -188,29 +214,29 @@ class ScriptUIParser
       }
       eachElementById<T extends _Control>(callback: (e: T) => void, namespacePath?: string)
       {
-            if (namespacePath === undef) namespacePath = 'std';
-            forOwn(objectPath(this._namespace, namespacePath, '::').idPointer, v =>
+            if (isUndefined(namespacePath)) namespacePath = 'std';
+            forOwn(objectPath(this.namespace, namespacePath, '::').idPointer, v =>
             {
                   callback(v);
             });
       }
       getElementById(elementId: string, namespacePath?: string): _Control
       {
-            if (namespacePath === undef) namespacePath = 'std';
-            return objectPath(this._namespace, namespacePath, '::').idPointer[elementId];
+            if (isUndefined(namespacePath)) namespacePath = 'std';
+            return objectPath(this.namespace, namespacePath, '::').idPointer[elementId];
       }
       getElementsByClassName(classNames: string, namespacePath?: string): _Control[]
       {
-            if (namespacePath === undef) namespacePath = 'std';
-            return objectPath(this._namespace, namespacePath, '::').classPointer[classNames];
+            if (isUndefined(namespacePath)) namespacePath = 'std';
+            return objectPath(this.namespace, namespacePath, '::').classPointer[classNames];
       }
       getNamespace(namespaceID: string, namespace?: AnyObject)
       {
-            if (namespace === undef) namespace = this._namespace;
+            if (isUndefined(namespace)) namespace = this.namespace;
             const curNamespace = namespace[namespaceID];
             const getElementById = (elementId: string) => curNamespace.idPointer[elementId];
             const getElementsByClassName = (classNames: string) => curNamespace.classPointer[classNames];
-            const getNamespace = (_namespaceID: string) => curNamespace[_namespaceID];
+            const getNamespace = (id: string) => curNamespace[id];
             return { getElementById, getElementsByClassName, getNamespace };
       }
 }

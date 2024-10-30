@@ -1,8 +1,8 @@
-import { isTreeViewNode } from './base/const';
+import { isFunction, isTreeViewNode } from './base/const';
 import duffDevice from './duffDevice';
 import { map } from './lib/es5';
 
-type DynamicNode = () => TreeViewNode | null | undefined;
+type DynamicNode = () => TreeViewNode | false;
 interface ListBaseData
 {
     readonly type: 'node' | 'item';
@@ -11,49 +11,64 @@ interface ListBaseData
 }
 interface TreeViewNodeData extends ListBaseData
 {
+    readonly type: 'node';
     children: (TreeViewNodeData | ListBaseData)[];
 }
 
-const returnTreeViewNodeData = (e: TreeViewNode): TreeViewNodeData =>
+/**
+ * 用于搜索列表
+ * @param {EditText} searchBox 搜索框
+ * @param {ListBox|TreeView|TreeViewNode|DynamicNode} list 列表或树视图或树视图节点可以是动态节点
+ * @example
+ * // 动态节点示例
+ * searchList(searchBox, () => isTreeViewNode(tree.selection) && tree.selection);
+ */
+const searchList = class
 {
-      const result = returnBaseData(e) as TreeViewNodeData;
-      result.children = map(e.items, k => returnListData(k));
-      return result;
-};
-const returnBaseData = (e: TreeViewNode | ListItem): ListBaseData => ({ type: e.type as any, text: e.text, image: e.image });
-const returnListData = (e: ListItem | TreeViewNode): ListBaseData | TreeViewNodeData => isTreeViewNode(e) ? returnTreeViewNodeData(e) : returnBaseData(e);
-const buildTreeView = (p: TreeViewNode, e: TreeViewNodeData) =>
-{
-      duffDevice(e.children, k =>
+      constructor(searchBox: EditText, list: ListBox | TreeView | TreeViewNode | DynamicNode)
       {
-            const node = p.add(k.type, k.text);
-            if (k.image) node.image = (k.image as any);
-            if (node.type === 'node') buildTreeView(p, k as TreeViewNodeData);
-      });
-};
-function searchList(searchBox: EditText, list: ListBox | TreeView | TreeViewNode | DynamicNode)
-{
-      let _list: () => ListBox | TreeView | TreeViewNode;
-      if (typeof list === 'function')
-      {
-            if (!list()) return;
-            _list = list as any;
-      }
-      else _list = () => list;
-      const cache = map(_list().items, e => returnListData(e));
-      searchBox.onChanging = function()
-      {
-            if (this.text.length < 0) return;
-            const __list = _list();
-            __list.removeAll();
-            duffDevice(cache, e =>
+            let cache: (TreeViewNodeData | ListBaseData)[];
+            let listData: TreeViewNode | ListBox | TreeView | false;
+            let tmpListData: Exclude<typeof listData, false>;
+            const getList = isFunction(list) ? list : () => list;
+            const getItems = () => map((getList() as TreeView).items, e => this.returnListData(e));
+            const upData = () =>
             {
-                  if (e.text.indexOf(searchBox.text) < 0) return;
-                  const node = __list.add((e.type as any), e.text);
-                  if (e.image) node.image = (e.image as any);
-                  if (e.type === 'node') buildTreeView(node as TreeViewNode, e as TreeViewNodeData);
-            });
+                  duffDevice(cache, e => { e.text.indexOf(searchBox.text) > -1 && this.addItem((listData as TreeViewNode), e); });
+            };
+            searchBox.onChanging = () =>
+            {
+                  listData = getList();
+                  if (searchBox.text.length < 0 || !listData) return;
+                  if (tmpListData === listData)
+                  {
+                        listData.removeAll();
+                        upData();
+                  }
+                  else if (!cache) cache = getItems();
+                  else
+                  {
+                        tmpListData.removeAll();
+                        duffDevice(cache, e => { this.addItem((tmpListData as TreeViewNode), e); });
+                        cache = getItems();
+                  }
+                  tmpListData = listData;
+            };
+      }
+      private returnBaseData = (e: TreeViewNode | ListItem): ListBaseData => ({ type: e.type as any, text: e.text, image: e.image });
+      private returnListData = (e: ListItem | TreeViewNode): ListBaseData | TreeViewNodeData => isTreeViewNode(e) ? this.returnTreeViewNodeData(e) : this.returnBaseData(e);
+      private returnTreeViewNodeData = (e: TreeViewNode): TreeViewNodeData =>
+      {
+            const result = this.returnBaseData(e) as TreeViewNodeData;
+            result.children = map(e.items, k => this.returnListData(k));
+            return result;
       };
-}
+      private addItem = (p: TreeViewNode, e: TreeViewNodeData | ListBaseData) =>
+      {
+            const node = p.add(e.type, e.text);
+            if (e.image) node.image = e.image;
+            if (e.type === 'node') this.addItem((node as TreeViewNode), e as TreeViewNodeData);
+      };
+}.prototype.constructor;
 
 export default searchList;

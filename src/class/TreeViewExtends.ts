@@ -1,4 +1,4 @@
-import { isListItem, isTreeViewNode } from '../base/const';
+import { isListItem, isNull, isTreeViewNode } from '../base/const';
 
 type TreeViewParent = TreeViewNode | TreeView;
 
@@ -12,7 +12,7 @@ class TreeViewExtends
       excludeNullEnviron<T>(callback: (item: ListItem) => T)
       {
             const element = this.treeView.selection;
-            if (element !== null)
+            if (!isNull(element))
             {
                   callback(element);
                   return true;

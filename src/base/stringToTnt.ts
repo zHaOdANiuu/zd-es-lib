@@ -1,7 +1,7 @@
 function stringToInt32(str: string)
 {
       const { length } = str;
-      const result = new Array<number>(Math.floor(length / 4));
+      const result = Array<number>(Math.floor(length / 4));
       let i = -1;
       let j = -1;
       while (i < length)

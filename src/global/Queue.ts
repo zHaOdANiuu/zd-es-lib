@@ -1,4 +1,4 @@
-import { undef } from './const';
+import { undef } from '../base/const';
 
 interface Node
 {
@@ -6,11 +6,12 @@ interface Node
       next: undefined | Node;
 }
 
+/** 队列 */
 class Queue<T>
 {
-      private _head: undefined | Node;
-      private _tail: undefined | Node;
-      private _size = 0;
+      private head: undefined | Node;
+      private tail: undefined | Node;
+      private size!: number;
       constructor()
       {
             this.clear();
@@ -18,36 +19,44 @@ class Queue<T>
       enqueue(value: T): void
       {
             const node: Node = { value, next: undef };
-
-            if (this._head)
+            if (this.head)
             {
-                  (this._tail as Node).next = node;
-                  this._tail = node;
+                  (this.tail as Node).next = node;
+                  this.tail = node;
             }
             else
             {
-                  this._head = node;
-                  this._tail = node;
+                  this.head = node;
+                  this.tail = node;
             }
-            ++this._size;
+            ++this.size;
       }
       dequeue(): T | undefined
       {
-            const current = this._head;
+            const current = this.head;
             if (!current) return;
-            this._head = (this._head as Node).next;
-            --this._size;
+            this.head = (this.head as Node).next;
+            --this.size;
             return current.value;
       }
-      size()
+      length()
       {
-            return this._size;
+            return this.size;
       }
       clear(): void
       {
-            this._head = undef;
-            this._tail = undef;
-            this._size = 0;
+            this.head = undef;
+            this.tail = undef;
+            this.size = 0;
+      }
+      each(f: (value: T) => void): void
+      {
+            let current = this.head;
+            while (current)
+            {
+                  f(current.value);
+                  current = current.next;
+            }
       }
 }
 

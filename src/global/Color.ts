@@ -1,5 +1,6 @@
-import { random } from './const';
+import { random } from '../base/const';
 
+/** 处理颜色相关的工具函数 */
 const Color = {
       rgbNormalize(rgb: number[]) { return [ rgb[0] / 255, rgb[1] / 255, rgb[2] / 255 ]; },
       hsbNormalize(hsb: number[]) { return [ hsb[0] / 360, hsb[1] / 100, hsb[2] / 100 ]; },

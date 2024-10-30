@@ -1,9 +1,9 @@
-import { HEX_CHARACTERS } from '../global/const';
+import { HEX_CHARACTERS } from './const';
 
 function hexToString(str: string)
 {
       const { length } = str;
-      const result = new Array<string>(Math.floor(length / 2));
+      const result = Array<string>(Math.floor(length / 2));
       if (length % 2 === 1) str += '0';
       let i = 0;
       let j = -1;

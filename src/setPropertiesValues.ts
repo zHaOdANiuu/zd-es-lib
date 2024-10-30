@@ -1,12 +1,13 @@
 import { isProperty } from './base/const';
+import forOwn from './base/forOwn';
 
-function setPropertiesValues(propertyGroup: PropertyGroup, values: any): void
+function setPropertiesValues<T extends PropertyGroup>(propertyGroup: T, values: Record<Extract<keyof T, string>, any>): void
 {
-      for (const key in values)
+      forOwn(values, (v, k) =>
       {
-            const prop = propertyGroup.property(key);
-            isProperty(prop) && prop.setValue(values[key]);
-      }
+            const prop = propertyGroup.property(k);
+            isProperty(prop) && prop.setValue(v);
+      });
 }
 
 export default setPropertiesValues;

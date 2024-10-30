@@ -1,6 +1,7 @@
+/** 图层效果的扩展(封装的api) */
 class EffectExtends
 {
-      layer: AVLayer;
+      private layer: AVLayer;
       constructor(layer: AVLayer)
       {
             this.layer = layer;

@@ -1,4 +1,4 @@
-import { hasOwn } from '../global/const';
+import { hasOwn } from './const';
 import forOwn from './forOwn';
 
 function modify<T extends object>(src: T, properties: T): void

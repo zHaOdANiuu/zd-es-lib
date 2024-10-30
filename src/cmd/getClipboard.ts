@@ -1,4 +1,4 @@
-import { trimEnd } from './lib/es5';
+import { trimEnd } from '../lib/es5';
 
 function getClipboard()
 {

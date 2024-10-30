@@ -1,5 +1,6 @@
-import { BASE_CHARACTERS } from './const';
+import { BASE_CHARACTERS } from '../base/const';
 
+/** base的编码 */
 function btoa(data: string): string
 {
       if ((/[^\0-\xFF]/).test(data)) throw 'Invalid character in input string';
