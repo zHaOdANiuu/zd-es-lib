@@ -24,7 +24,7 @@
 
 ## this
 
-1. 访问全局的 this 时,使用`globalThis`对象
+1. 访问全局的 this 时,使用`GLOBAL_THIS`对象
 2. 避免使用`this`关键字,使用箭头函数或`bind`方法代替
 
 ## var | let | const

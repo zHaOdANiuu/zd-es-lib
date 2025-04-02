@@ -2,5 +2,5 @@
 node_modules
 function
 package
+tests
 
-package-lock.json

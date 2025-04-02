@@ -1,4 +1,4 @@
-declare type MouseEventCallback <T> = (this: T, e: MouseEvent) => void;
+declare type MouseEventCallback<T> = (this: T, e: MouseEvent) => void;
 
 declare type Exclude<T, U> = T extends U ? never : T;
 
@@ -18,36 +18,31 @@ declare type BuildIndexUnion<T extends number, K extends unknown[] = []> = K['le
       ? K[number]
       : BuildIndexUnion<T, [...K, K['length']]>;
 
-declare type Parameters<T extends (...args: unknown) => unknown> = T extends (
+declare type Parameters<T extends (...args: unknown) => unknown> = T extends (...args: infer P) => unknown ? P : never;
+
+declare type ConstructorParameters<T extends abstract new (...args: unknown) => unknown> = T extends abstract new (
       ...args: infer P
 ) => unknown
       ? P
       : never;
 
-declare type ConstructorParameters<T extends abstract new (...args: unknown) => unknown> =
-      T extends abstract new (...args: infer P) => unknown ? P : never;
+declare type ReturnType<T extends (...args: unknown) => unknown> = T extends (...args: unknown) => infer R
+      ? R
+      : unknown;
 
-declare type ReturnType<T extends (...args: unknown) => unknown> = T extends (
+declare type InstanceType<T extends abstract new (...args: unknown) => unknown> = T extends abstract new (
       ...args: unknown
 ) => infer R
       ? R
       : unknown;
 
-declare type InstanceType<T extends abstract new (...args: unknown) => unknown> =
-      T extends abstract new (...args: unknown) => infer R ? R : unknown;
-
-type NumberRange<
-      Min,
-      Max extends number,
-      Result extends number[] = []
-> = Result['length'] extends Max
+type NumberRange<Min, Max extends number, Result extends number[] = []> = Result['length'] extends Max
       ? Result[number]
       : NumberRange<Min, Max, [Result['length'], ...Result]>;
 
-type MakeTuple<
-      Target extends number,
-      CurTuple extends any[] = []
-> = CurTuple['length'] extends Target ? CurTuple : MakeTuple<Target, [...CurTuple, any]>;
+type MakeTuple<Target extends number, CurTuple extends any[] = []> = CurTuple['length'] extends Target
+      ? CurTuple
+      : MakeTuple<Target, [...CurTuple, any]>;
 
 declare type FilterConditionally<Source, Condition> = Pick<
       Source,

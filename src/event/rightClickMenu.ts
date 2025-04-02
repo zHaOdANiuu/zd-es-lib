@@ -3,20 +3,17 @@
  * @param container 要容纳的控件
  * @param window 要显示的菜单
  */
-function rightClickMenu(container: _Control, window: Window)
+function rightClickMenu(container: _Control, win: Window)
 {
-      window.onDeactivate = function()
-      {
-            this.hide();
-      };
-      container.addEventListener('click', e =>
+      win.addEventListener('blur', function(this: Window) { this.hide() })
+      container.addEventListener('click', function(e)
       {
             if (e.button === 2 && e.detail === 1)
             {
-                  window.frameLocation = [ e.screenX, e.screenY ] as Point;
-                  window.show();
+                  win.frameLocation = [ e.screenX, e.screenY ] as Point
+                  win.show()
             }
-      });
+      })
 }
 
-export default rightClickMenu;
+export default rightClickMenu

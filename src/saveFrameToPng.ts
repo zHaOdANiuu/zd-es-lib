@@ -1,8 +1,12 @@
-import { activeCompItemEnviron } from './Ae';
+import { activeCompItemEnviron } from './each'
 
-function saveFrameToPng(file: File)
-{
-      activeCompItemEnviron(compItem => compItem.saveFrameToPng(compItem.time, file));
+function saveFrameToPng(): File | null {
+  let png: File | null = null
+  activeCompItemEnviron(compItem => {
+    png = new File(Folder.desktop.fsName + '/' + compItem.name + '.png')
+    compItem.saveFrameToPng(compItem.time, png)
+  })
+  return png
 }
 
-export default saveFrameToPng;
+export default saveFrameToPng
