@@ -2,7 +2,7 @@
 function duffEach<T>(items: T[], process: (item: T, index: number) => void): void {
   const len = items.length
   let iterations = ((len / 8) | 0) + 1
-  const start = len * 8
+  const start = len % 8
   let i = -1
   do {
     switch (start) {
