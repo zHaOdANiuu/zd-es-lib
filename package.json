@@ -1,6 +1,6 @@
 {
   "name": "zd-es-lib",
-  "version": "2.0.0.1",
+  "version": "2.0.1",
   "description": "一个 ExtendScript 的库,帮助AE脚本开发",
   "main": "index.ts",
   "types": "src/@types/index.d.ts",
